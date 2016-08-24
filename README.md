@@ -2,4 +2,4 @@
 
 # chat-grad-project
 
-See it deployed: https://chat-grad-project.herokuapp.com/
+See it deployed: https://chat-grad-project-geo.herokuapp.com/

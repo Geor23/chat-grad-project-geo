@@ -1,13 +1,16 @@
 var express = require("express");
 var cookieParser = require("cookie-parser");
+var bodyParser = require("body-parser");
 
 module.exports = function(port, db, githubAuthoriser) {
     var app = express();
 
     app.use(express.static("public"));
     app.use(cookieParser());
+    app.use(bodyParser());
 
     var users = db.collection("users");
+    var messages = db.collection("messages");
     var sessions = {};
 
     app.get("/oauth", function(req, res) {
@@ -45,6 +48,17 @@ module.exports = function(port, db, githubAuthoriser) {
         });
     });
 
+    app.post("/api/messages", function(req, res){
+        messages.insertOne({
+            fromUser: req.body.from,
+            toUser: req.body.to,
+            messageText: req.body.messageText
+        }, function(err) {
+            res.sendStatus(401);
+        });
+        res.sendStatus(200);
+    });
+
     app.use(function(req, res, next) {
         if (req.cookies.sessionToken) {
             req.session = sessions[req.cookies.sessionToken];
@@ -64,6 +78,24 @@ module.exports = function(port, db, githubAuthoriser) {
         }, function(err, user) {
             if (!err) {
                 res.json(user);
+            } else {
+                res.sendStatus(500);
+            }
+        });
+    });
+
+    app.get("/api/messages", function(req, res) { 
+        console.log("Q: " + req.query);
+        messages.find().toArray(function(err, docs) {
+            if (!err) {
+                res.json(docs.map(function(msg) {
+                    return {
+                        id: msg._id,
+                        from: msg.fromUser,
+                        to: msg.toUser,
+                        messageText: msg.messageText
+                    };
+                }));
             } else {
                 res.sendStatus(500);
             }

@@ -3,19 +3,39 @@
     <head>
         <meta charset="utf-8">
         <title>Chat</title>
+        <link rel="stylesheet" type="text/css" href="main.css">
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.1/angular.min.js"></script>
         <script src="js/main.js"></script>
     </head>
     <body ng-controller="ChatController">
         <a ng-show="!loggedIn" href="{{loginUri}}">Log in</a>
         <section ng-show="loggedIn">
-            <p>Logged in as {{user.name}}.</p>
+            <p style="right: 10px; position: absolute">Logged in as {{user.name}}.</p>
+            <div class="container" onclick="myFunction(this)">
+              <div class="bar1"></div>
+              <div class="bar2"></div>
+              <div class="bar3"></div>
+            </div>
             <h2>List of registered users</h2>
             <ul>
                 <li ng-repeat="user in users">
-                    {{user.name}}
+                    <button ng-click="startConversation(user)">{{user.name}}</button>
                 </li>
             </ul>
+        </section>
+        <section ng-show="showConversation">
+            <p>Conversation with {{messagingNow.name}}.</p>
+            <ul>
+                <li ng-repeat="msg in messages">
+                    <div ng-if="msg.from==user._id&&msg.to==messagingNow.id">
+                    From: {{msg.from}}, To: {{msg.to}}, Message: {{msg.messageText}}
+                    </div>
+                </li>
+            </ul>
+            <form ng-submit="sendMessage(newMessage)">
+                <input type="text" ng-model="newMessage"></input>
+                <button type="submit">Send</button>
+            </form>
         </section>
     </body>
 </html>
