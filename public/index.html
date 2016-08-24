@@ -11,10 +11,10 @@
         <a ng-show="!loggedIn" href="{{loginUri}}">Log in</a>
         <section ng-show="loggedIn">
             <p style="right: 10px; position: absolute">Logged in as {{user.name}}.</p>
-            <div class="container" onclick="myFunction(this)">
-              <div class="bar1"></div>
-              <div class="bar2"></div>
-              <div class="bar3"></div>
+            <div class="container" ng-click="toggle=!toggle">
+              <div ng-class="!toggle ? 'bar1' : 'bar1-change'"></div>
+              <div ng-class="!toggle ? 'bar2' : 'bar2-change'"></div>
+              <div ng-class="!toggle ? 'bar3' : 'bar3-change'"></div>
             </div>
             <h2>List of registered users</h2>
             <ul>

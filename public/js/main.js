@@ -7,10 +7,7 @@
         $scope.messagingNow = "";
         $scope.newMessage = "";
         $scope.messages = [];
-
-        $scope.myFunction = function(x) {
-            x.classList.toggle("change");
-        }
+        $scope.toggle = false;
 
         $scope.startConversation = function(user) {
             $scope.showConversation = true;
