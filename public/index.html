@@ -11,19 +11,22 @@
         <a ng-show="!loggedIn" href="{{loginUri}}">Log in</a>
         <section ng-show="loggedIn">
             <p class="logged-in-as">Logged in as {{user.name}}.</p>
+            
+            
+        </section>
+        <div ng-class="!toggle ? 'menu-container-in' : 'menu-container-out'">
             <div class="container" ng-click="toggle=!toggle">
               <div ng-class="!toggle ? 'bar1' : 'bar1-change'"></div>
               <div ng-class="!toggle ? 'bar2' : 'bar2-change'"></div>
               <div ng-class="!toggle ? 'bar3' : 'bar3-change'"></div>
             </div>
-            <h2>List of registered users</h2>
-            <ul>
+            <h2 ng-show="toggle" class="reg">REGISTERED USERS</h2>
+            <ul ng-show="toggle">
                 <li ng-repeat="user in users">
-                    <button ng-click="startConversation(user)">{{user.name}}</button>
+                    <div class="margin" ng-click="startConversation(user)"><span class="users">{{user.name}}</span></div>
                 </li>
             </ul>
-        </section>
-        <div ng-class="!toggle ? 'menu-container-in' : 'menu-container-out'"></div>
+        </div>
         <section ng-show="showConversation">
             <p>Conversation with {{messagingNow.name}}.</p>
             <ul>
