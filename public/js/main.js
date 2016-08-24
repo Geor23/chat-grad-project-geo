@@ -8,6 +8,7 @@
         $scope.newMessage = "";
         $scope.messages = [];
         $scope.toggle = false;
+        $scope.ctoggle = false;
 
         $scope.startConversation = function(user) {
             $scope.showConversation = true;
