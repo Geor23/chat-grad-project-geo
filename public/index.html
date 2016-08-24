@@ -10,7 +10,7 @@
     <body ng-controller="ChatController">
         <a ng-show="!loggedIn" href="{{loginUri}}">Log in</a>
         <section ng-show="loggedIn">
-            <p style="right: 10px; position: absolute">Logged in as {{user.name}}.</p>
+            <p class="logged-in-as">Logged in as {{user.name}}.</p>
             <div class="container" ng-click="toggle=!toggle">
               <div ng-class="!toggle ? 'bar1' : 'bar1-change'"></div>
               <div ng-class="!toggle ? 'bar2' : 'bar2-change'"></div>
@@ -23,6 +23,7 @@
                 </li>
             </ul>
         </section>
+        <div ng-class="!toggle ? 'menu-container-in' : 'menu-container-out'"></div>
         <section ng-show="showConversation">
             <p>Conversation with {{messagingNow.name}}.</p>
             <ul>

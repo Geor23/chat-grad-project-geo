@@ -13,7 +13,6 @@
 
 /* Rotate first bar */
 .bar1-change{
-
     width: 35px;
     height: 5px;
     background-color: #333;
@@ -25,7 +24,6 @@
 
 /* Fade out the second bar */
 .bar2-change{
-
     width: 35px;
     height: 5px;
     background-color: #333;
@@ -36,7 +34,6 @@
 
 /* Rotate last bar */
 .bar3-change{
-    
     width: 35px;
     height: 5px;
     background-color: #333;
@@ -44,4 +41,37 @@
     transition: 0.4s;
     -webkit-transform: rotate(45deg) translate(-8px, -8px) ;
     transform: rotate(45deg) translate(-8px, -8px) ;
+}
+
+.logged-in-as {
+     right: 10px; 
+     position: absolute;
+}
+
+.menu-container-in {
+    background-color: black;
+    opacity: 0.2;
+    height: 100%;
+    overflow: auto;
+    width: 60px;
+    left: 0px;
+    position: absolute;
+    transition: 1s;
+    border-radius: 5px;
+    border-color: black;
+    border-width: 10px;
+}
+
+.menu-container-out {
+    background-color: black;
+    opacity: 0.7;
+    height: 100%;
+    overflow: auto;
+    width: 400px;
+    left: 0px;
+    transition: 1s;
+    position: absolute;
+    border-radius: 5px;
+    border-color: black;
+    border-width: 10px; 
 }
