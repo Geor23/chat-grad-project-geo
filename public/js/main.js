@@ -9,6 +9,8 @@
         $scope.messages = [];
         $scope.toggle = false;
         $scope.ctoggle = false;
+        $scope.inputno = 1;
+        $scope.inputno = [];
 
         $scope.startConversation = function(user) {
             $scope.showConversation = true;

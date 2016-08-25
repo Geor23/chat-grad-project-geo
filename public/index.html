@@ -6,6 +6,14 @@
         <link rel="stylesheet" type="text/css" href="main.css">
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.1/angular.min.js"></script>
         <script src="js/main.js"></script>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     </head>
     <body ng-controller="ChatController">
         <a ng-show="!loggedIn" href="{{loginUri}}" style="text-align: center; top: 50%; left:50%; position: absolute">Log in</a>
@@ -25,8 +33,15 @@
                 </li>
             </ul>
         </div>
-        <div ng-class="ctoggle ? 'start-conv-container-open' : 'start-conv-container'">
+        <div ng-hide="!loggedIn" ng-class="ctoggle ? 'start-conv-container-open' : 'start-conv-container'">
             <div class="start-conv" ng-click="ctoggle = true">START CONVERSATION</div>
+            <div ng-show="ctoggle" >
+                <div ng-repeat="i in inputno track by $index">
+                    <input type="downdrop"></input>
+                </div>
+                <button ng-click="inputno.push(''); apply()">+</button>
+            </div>
+            <div ng-show="ctoggle" class="chat-now-btn">CHAT NOW</div>
         </div>
         <section ng-show="showConversation">
             <p>Conversation with {{messagingNow.name}}.</p>
