@@ -9,13 +9,31 @@
         $scope.messages = [];
         $scope.toggle = false;
         $scope.ctoggle = false;
-        $scope.inputno = 1;
         $scope.inputno = [];
 
         $scope.startConversation = function(user) {
             $scope.showConversation = true;
             $scope.messagingNow = user;
             $scope.getMessages($scope.user, $scope.messagingNow);
+        };
+
+        $scope.isAlreadyInConv = function(user) {
+            for (var i =0; i<$scope.inputno.length; i++) {
+                if ($scope.inputno[i] == user.name) {
+                    return true;
+                }
+            }
+            return false;
+        };
+
+        $scope.addUserToConv = function(user) {
+            for (var i =0; i<$scope.inputno.length; i++) {
+                if ($scope.inputno[i] == "Add User") {
+                    $scope.inputno[i] = user.name;
+                }
+            }
+            $scope.inputno.push("Add User");
+            console.log($scope.inputno);
         };
 
         $scope.sendMessage = function(msg) {
