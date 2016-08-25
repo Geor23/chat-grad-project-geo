@@ -11,6 +11,7 @@ module.exports = function(port, db, githubAuthoriser) {
 
     var users = db.collection("users");
     var messages = db.collection("messages");
+    var conversations = db.collection("conversations");
     var sessions = {};
 
     app.get("/oauth", function(req, res) {
@@ -48,15 +49,35 @@ module.exports = function(port, db, githubAuthoriser) {
         });
     });
 
+    app.post("/api/conv", function(req, res){
+
+        conversations.findOne( { users: req.body } , function(err, conv) {
+            
+            console.log(conv);
+             
+            if (conv!==null) {
+                res.sendStatus(200);
+            } else {
+                conversations.insertOne({ users: req.body});
+                res.sendStatus(200);
+            } 
+        });
+
+    });
+
+
+
     app.post("/api/messages", function(req, res){
         messages.insertOne({
             fromUser: req.body.from,
             toUser: req.body.to,
             messageText: req.body.messageText
         }, function(err) {
+            if (err)
             res.sendStatus(401);
+            else res.sendStatus(200);
         });
-        res.sendStatus(200);
+        
     });
 
     app.use(function(req, res, next) {
@@ -85,7 +106,7 @@ module.exports = function(port, db, githubAuthoriser) {
     });
 
     app.get("/api/messages", function(req, res) { 
-        console.log("Q: " + req.query);
+        console.log("Q: " + JSON.stringify(req.query));
         messages.find().toArray(function(err, docs) {
             if (!err) {
                 res.json(docs.map(function(msg) {

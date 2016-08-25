@@ -30,7 +30,7 @@
             <h2 ng-show="toggle" class="reg">REGISTERED USERS</h2>
             <ul ng-show="toggle">
                 <li ng-repeat="user in users">
-                    <div class="margin" ng-click="startConversation(user)"><span class="users">{{user.name}}</span></div>
+                    <div class="margin"><span class="users">{{user.name}}</span></div>
                 </li>
             </ul>
         </div>
@@ -58,7 +58,7 @@
 
                 </div>
             </div>
-            <div ng-show="ctoggle" class="chat-now-btn">CHAT NOW</div>
+            <div ng-show="ctoggle" class="chat-now-btn" ng-click="startConversation()">CHAT NOW</div>
         </div>
         <section ng-show="showConversation">
             <p>Conversation with {{messagingNow.name}}.</p>
