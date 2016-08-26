@@ -194,6 +194,13 @@ ul {
     position: relative;
     bottom: 0px;
     border: 2px solid black;
+    transition: width 1s;
+}
+
+.bubble:hover {
+    transition: 1s;
+    width: 200px;
+    height: 200px;
 }
 
 .bubble #popup {
@@ -202,17 +209,21 @@ ul {
 
 .bubble:hover #popup {
     display: block;
+    color: black;
+    text-align: center;
+    font-size: 11px;
+    padding: 0px;
+    margin-top: 10px;
+    letter-spacing: 1.5px;
 }
 
 .bubble-container {
     display: flex;
     flex-flow: row; 
-    align-items: flex-end;
     width: 100%;
     flex-wrap:  wrap-reverse;
     bottom: 0px;
     position: absolute;
     justify-content: space-around;
-    align-self: auto;
     z-index: -100;
 }
