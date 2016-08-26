@@ -8,6 +8,7 @@
         <link href="registered-users.html">
         <link href="bubbles.html">
         <link href="start-conv.html">
+        <link href="conv.html">
         <script src="js/main.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <!-- Latest compiled and minified CSS -->
@@ -31,25 +32,9 @@
 
         <div ng-include="'start-conv.html'"></div>
 
-        <div ng-show="showConversation" class="start-conv-container-open">
-            <div class="start-conv"><p>< {{conv.users}} ></p></div>
+        <div ng-include="'conv.html'"></div>
 
-            <div class="conv-users-container">
-
-                <ul><li ng-repeat="msg in messages">
-                    <div ng-if="msg.from==user._id&&msg.to==messagingNow.id">
-                    From: {{msg.from}}, To: {{msg.to}}, Message: {{msg.messageText}}
-                    </div>
-            </li></ul>
-            </div>
-
-            <form ng-submit="sendMessage(newMessage)">
-                <input type="text" ng-model="newMessage"></input>
-                <button type="submit">Send</button>
-            </form>
-        </div>
-
-       <div ng-include="'bubbles.html'"></div>
+        <div ng-include="'bubbles.html'"></div>
 
     </body>
 </html>
