@@ -1,5 +1,5 @@
  <div ng-hide="!loggedIn" class="bubble-container">
     <div ng-repeat="conv in conversations track by $index" ng-style="{'align-self': aligs[$index]}">
-        <div class="bubble" ng-style="{'width': convSize[$index] + 'px', 'height': convSize[$index] + 'px', 'background-color': convCol[$index]}"><div id="popup">{{getListOfUsers(conv.users)}}</div></div>
+        <div class="bubble" ng-style="{'width': convSize[$index] + 'px', 'height': convSize[$index] + 'px', 'background-color': convCol[$index]}" ng-click="openConversation(conv)"><div id="popup">{{getListOfUsers(conv.users)}}</div></div>
     </div>
 </div>

@@ -43,6 +43,12 @@
             return align[Math.floor(Math.random() * align.length)];
         }
 
+        $scope.openConversation = function(conversation) {
+            $scope.conv = conversation ;
+            $scope.getMessages();
+            $scope.showConversation = true;
+        };
+
         $scope.startConversation = function() {
             $scope.inputno.pop();
             $scope.inputno.push($scope.user.name);
