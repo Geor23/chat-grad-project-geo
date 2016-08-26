@@ -70,8 +70,10 @@
                 <button type="submit">Send</button>
             </form>
         </section>
-        <div ng-repeat="conv in conversations">
-            <div class="bubble"></div>
+        <div class="bubble-container">
+            <div ng-repeat="conv in conversations" ng-init="getRandom()">
+                <div class="bubble" ng-style="{'width': getRandomSize() + 'px', 'height': getRandomSize() + 'px', 'background-color': getRandomColor()}"></div>
+            </div>
         </div>
     </body>
 </html>

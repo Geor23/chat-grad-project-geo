@@ -12,6 +12,17 @@
         $scope.conv = {};
         $scope.conversations = []; 
 
+        var colors = ['#F72553', '#4125F7', '#25E9F7', '#25F7B8', '#25F729', '#064D07', '#364D06', '#DEF227', '#ED7B00', '#ED0400', '#701110', '#103170', '#D61AD6'];
+
+        $scope.getRandomSize = function() {
+            return (Math.random() * 90 ) + 50 ;
+            $scope.color = colors[Math.floor(Math.random() * colors.length)];
+        };
+
+         $scope.getRandomColor = function() {
+            return colors[Math.floor(Math.random() * colors.length)];
+        };
+
         $scope.startConversation = function() {
             $scope.inputno.pop();
             $scope.inputno.push($scope.user.name);

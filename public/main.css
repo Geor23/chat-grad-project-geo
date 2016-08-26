@@ -196,4 +196,19 @@ ul {
     height: 100px;
     position: relative;
     bottom: 0px;
+    opacity: 0.5;
+    border: 2px solid black;
+}
+
+.bubble-container {
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    flex-flow: row; 
+    -webkit-align-items: flex-end; /* Safari */
+    align-items: flex-end;
+    width: 100%;
+    -webkit-flex-wrap: wrap-reverse; /* Safari */
+    flex-wrap:  wrap-reverse;
+    bottom: 0px;
+    position: absolute;
 }
