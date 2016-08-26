@@ -17,6 +17,9 @@
         $scope.aligs = [];
 
         $scope.getListOfUsers = function(arr) {
+            var index = arr.indexOf($scope.user.name);
+            if (index > -1)
+                arr.splice(arr.indexOf($scope.user.name), 1);
             return arr.join(', ');
         }; 
 
@@ -82,9 +85,6 @@
         };
 
         $scope.sendMessage = function(msg) {
-            console.log($scope.user);
-            console.log(msg);
-            console.log($scope.messagingNow);
             $scope.newMessage = "";
             var data = { 
                     conv_id: $scope.conv._id,

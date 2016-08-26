@@ -138,6 +138,19 @@ ul {
     text-align: center;
 }
 
+.users-conv {
+    position: relative;
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 20px;
+    text-align: center;
+    border-bottom: 2px dotted black;
+    overflow: hidden;
+    margin: 15px 150px;
+    height: 40px;
+}
+
 .start-conv:hover {
     border: 5px solid black;
     cursor: pointer;
@@ -219,4 +232,22 @@ ul {
     position: absolute;
     justify-content: space-around;
     z-index: -100;
+}
+
+.conv-container {
+    position: relative;
+    text-align: center;
+    margin: 20px 100px;
+    padding: 10px;
+    border: 1px dotted black;
+    overflow-y: auto;
+    z-index: 10;
+    height: 350px;
+}
+
+.send-msg {
+    position: relative;
+    text-align: center;
+    margin: 10px 100px;
+    padding: 0px;
 }
