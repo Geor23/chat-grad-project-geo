@@ -10,20 +10,22 @@
         $scope.toggle = false;
         $scope.ctoggle = false;
         $scope.inputno = [];
+        $scope.convId = '';
 
         $scope.startConversation = function() {
             $scope.inputno.pop();
             $scope.inputno.push($scope.user.name);
             console.log($scope.inputno);
             $http.post("/api/conv", $scope.inputno).then(function(response){
-                console.log(response.data);
+                $scope.convId = response.data;
+                $scope.getMessages();
                 //$scope.getMessages($scope.user, $scope.messagingNow);
             }, function(response) {
                 console.log(response);
             });
             $scope.showConversation = true;
             //$scope.messagingNow = user;
-            //$scope.getMessages($scope.user, $scope.messagingNow);
+            
         };
 
         $scope.isAlreadyInConv = function(user) {
@@ -50,7 +52,8 @@
             console.log(msg);
             console.log($scope.messagingNow);
             $scope.newMessage = "";
-            var data= { 
+            var data = { 
+                    conv_id: $scope.convId,
                     from: $scope.user._id,
                     to: $scope.messagingNow.id,
                     messageText: msg 
@@ -62,12 +65,11 @@
             });
         };
 
-        $scope.getMessages = function(from, to) {
+        $scope.getMessages = function() {
 
             $http.get("/api/messages", {
                 params: {
-                    from: from, 
-                    to: to
+                    conv_id: $scope.convId
                 }
             })
                 .then(function(res) {

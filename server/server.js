@@ -70,6 +70,7 @@ module.exports = function(port, db, githubAuthoriser) {
 
     app.post("/api/messages", function(req, res){
         messages.insertOne({
+            conv_id: req.body.conv_id,
             fromUser: req.body.from,
             toUser: req.body.to,
             messageText: req.body.messageText
@@ -106,9 +107,10 @@ module.exports = function(port, db, githubAuthoriser) {
         });
     });
 
+
     app.get("/api/messages", function(req, res) { 
         console.log("Q: " + JSON.stringify(req.query));
-        messages.find().toArray(function(err, docs) {
+        messages.find({ conv_id: req.query.conv_id }).toArray(function(err, docs) {
             if (!err) {
                 res.json(docs.map(function(msg) {
                     return {
