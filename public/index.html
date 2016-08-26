@@ -70,9 +70,9 @@
                 <button type="submit">Send</button>
             </form>
         </section>
-        <div class="bubble-container">
-            <div ng-repeat="conv in conversations" ng-init="getRandom()">
-                <div class="bubble" ng-style="{'width': getRandomSize() + 'px', 'height': getRandomSize() + 'px', 'background-color': getRandomColor()}"></div>
+        <div ng-hide="!loggedIn" class="bubble-container">
+            <div ng-repeat="conv in conversations track by $index">
+                <div class="bubble" ng-style="{'width': convSize[$index] + 'px', 'height': convSize[$index] + 'px', 'background-color': convCol[$index]}"></div>
             </div>
         </div>
     </body>

@@ -190,10 +190,7 @@ ul {
 }
 
 .bubble {
-    background-color: blue;
     border-radius: 50%;
-    width: 100px;
-    height: 100px;
     position: relative;
     bottom: 0px;
     opacity: 0.5;
@@ -201,14 +198,14 @@ ul {
 }
 
 .bubble-container {
-    display: -webkit-flex; /* Safari */
     display: flex;
     flex-flow: row; 
-    -webkit-align-items: flex-end; /* Safari */
     align-items: flex-end;
     width: 100%;
-    -webkit-flex-wrap: wrap-reverse; /* Safari */
     flex-wrap:  wrap-reverse;
     bottom: 0px;
     position: absolute;
+    justify-content: space-around;
+    align-self: auto;
+    z-index: -100;
 }

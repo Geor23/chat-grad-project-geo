@@ -12,16 +12,27 @@
         $scope.conv = {};
         $scope.conversations = []; 
 
+        $scope.convSize = [];
+        $scope.convCol = [];
+
+        $scope.setRandom = function() {
+            for (var i = 0; i < $scope.conversations.length; i++ ) {
+                $scope.convSize[i] = getRandomSize();
+                $scope.convCol[i] = getRandomColor();
+            }
+            console.log($scope.convSize);
+            console.log($scope.convCol);
+        };
+
         var colors = ['#F72553', '#4125F7', '#25E9F7', '#25F7B8', '#25F729', '#064D07', '#364D06', '#DEF227', '#ED7B00', '#ED0400', '#701110', '#103170', '#D61AD6'];
 
-        $scope.getRandomSize = function() {
+        function getRandomSize() {
             return (Math.random() * 90 ) + 50 ;
-            $scope.color = colors[Math.floor(Math.random() * colors.length)];
-        };
+        }
 
-         $scope.getRandomColor = function() {
+         function getRandomColor() {
             return colors[Math.floor(Math.random() * colors.length)];
-        };
+        }
 
         $scope.startConversation = function() {
             $scope.inputno.pop();
@@ -76,6 +87,9 @@
             $http.get("/api/conv")
                 .then(function(res) {
                     $scope.conversations = res.data;
+                    $scope.convSize = new Array($scope.conversations.length);
+                    $scope.convCol = new Array($scope.conversations.length);
+                    $scope.setRandom();
                     }, function(response) {
                     }
                 );
