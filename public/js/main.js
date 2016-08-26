@@ -20,11 +20,9 @@
                 $scope.convSize[i] = getRandomSize();
                 $scope.convCol[i] = getRandomColor();
             }
-            console.log($scope.convSize);
-            console.log($scope.convCol);
         };
 
-        var colors = ['#F72553', '#4125F7', '#25E9F7', '#25F7B8', '#25F729', '#064D07', '#364D06', '#DEF227', '#ED7B00', '#ED0400', '#701110', '#103170', '#D61AD6'];
+        var colors = ['rgba(65, 0, 0, 0.5)', 'rgba(241, 18, 18, 0.5)', 'rgba(237, 241, 18, 0.5)', 'rgba(104, 241, 18, 0.5)', 'rgba(47, 108, 8, 0.5)', 'rgba(40, 244, 112, 0.5)', 'rgba(40, 244, 210, 0.5)', 'rgba(5, 112, 94, 0.5)', 'rgba(34, 170, 204, 0.5)', 'rgba(34, 37, 204, 0.5)', 'rgba(5, 6, 101, 0.5)', 'rgba(107, 32, 238, 0.5)', 'rgba(43, 7, 104, 0.5)', 'rgba(104, 43, 7, 0.5)', 'rgba(20, 104, 7, 0.5)', 'rgba(7, 20, 104, 0.5)', 'rgba(96, 7, 104, 0.5)', 'rgba(218, 12, 237, 0.5)', 'rgba(222, 16, 133, 0.5)', 'rgba(222, 16, 58, 0.5)', 'rgba(147, 0, 29, 0.5)', 'rgba(216, 12, 16, 0.5)'];
 
         function getRandomSize() {
             return (Math.random() * 90 ) + 50 ;

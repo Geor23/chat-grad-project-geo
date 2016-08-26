@@ -72,7 +72,7 @@
         </section>
         <div ng-hide="!loggedIn" class="bubble-container">
             <div ng-repeat="conv in conversations track by $index">
-                <div class="bubble" ng-style="{'width': convSize[$index] + 'px', 'height': convSize[$index] + 'px', 'background-color': convCol[$index]}"></div>
+                <div class="bubble" ng-style="{'width': convSize[$index] + 'px', 'height': convSize[$index] + 'px', 'background-color': convCol[$index]}"><div id="popup">{{conv.users}}</div></div>
             </div>
         </div>
     </body>

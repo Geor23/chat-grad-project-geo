@@ -193,8 +193,15 @@ ul {
     border-radius: 50%;
     position: relative;
     bottom: 0px;
-    opacity: 0.5;
     border: 2px solid black;
+}
+
+.bubble #popup {
+    display: none;
+}
+
+.bubble:hover #popup {
+    display: block;
 }
 
 .bubble-container {
