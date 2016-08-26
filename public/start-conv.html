@@ -1,0 +1,22 @@
+<div ng-hide="!loggedIn||showConversation" ng-class="ctoggle ? 'start-conv-container-open' : 'start-conv-container'">
+    <div class="start-conv" ng-click="ctoggle = true">START CONVERSATION</div>
+    <div class="conv-users-container" ng-show="ctoggle">
+        <div ng-init="inputno.push('Add User');">
+            <div ng-repeat="i in inputno track by $index">
+
+                <div class="dropdown">
+
+                  <button class="dropdown-toggle add-user" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <div>{{i}} <span class="caret"></span></div>
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li ng-repeat="user in users" ng-class="isAlreadyInConv(user) ? 'disabled' : 'enabled'">
+                        <a href="#" ng-click="addUserToConv(user);">{{user.name}}</a>
+                    </li>
+                  </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-show="ctoggle" class="chat-now-btn" ng-click="startConversation()">CHAT NOW</div>
+</div>
