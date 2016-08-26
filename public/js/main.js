@@ -10,21 +10,19 @@
         $scope.ctoggle = false;
         $scope.inputno = [];
         $scope.conv = {};
+        $scope.conversations = []; 
 
         $scope.startConversation = function() {
             $scope.inputno.pop();
             $scope.inputno.push($scope.user.name);
-            console.log($scope.inputno);
             $http.post("/api/conv", $scope.inputno).then(function(response){
                 $scope.conv = response.data;
                 $scope.getMessages();
-                //$scope.getMessages($scope.user, $scope.messagingNow);
+
             }, function(response) {
                 console.log(response);
             });
             $scope.showConversation = true;
-            //$scope.messagingNow = user;
-            
         };
 
         $scope.isAlreadyInConv = function(user) {
@@ -62,6 +60,15 @@
                 console.log(response);
             });
         };
+
+        $scope.getConv = function() {
+            $http.get("/api/conv")
+                .then(function(res) {
+                    $scope.conversations = res.data;
+                    }, function(response) {
+                    }
+                );
+        }
 
         $scope.getMessages = function() {
 

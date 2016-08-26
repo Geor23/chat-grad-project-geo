@@ -18,7 +18,7 @@
     </head>
     <body ng-controller="ChatController">
         <a ng-show="!loggedIn" href="{{loginUri}}" style="text-align: center; top: 50%; left:50%; position: absolute">Log in</a>
-        <section ng-show="loggedIn">
+        <section ng-show="loggedIn" ng-init="getConv()">
             <p class="logged-in-as">Logged in as {{user.name}}.</p>
         </section>
         <div ng-hide="!loggedIn" ng-class="!toggle ? 'menu-container-in' : 'menu-container-out'">
@@ -34,7 +34,7 @@
                 </li>
             </ul>
         </div>
-        <div ng-hide="!loggedIn" ng-class="ctoggle ? 'start-conv-container-open' : 'start-conv-container'">
+        <div ng-hide="!loggedIn||showConversation" ng-class="ctoggle ? 'start-conv-container-open' : 'start-conv-container'">
             <div class="start-conv" ng-click="ctoggle = true">START CONVERSATION</div>
             <div class="conv-users-container" ng-show="ctoggle">
                 <div ng-init="inputno.push('Add User');">
@@ -45,15 +45,12 @@
                           <button class="dropdown-toggle add-user" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             <div>{{i}} <span class="caret"></span></div>
                           </button>
-
                           <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                             <li ng-repeat="user in users" ng-class="isAlreadyInConv(user) ? 'disabled' : 'enabled'">
                                 <a href="#" ng-click="addUserToConv(user);">{{user.name}}</a>
                             </li>
                           </ul>
-
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -73,5 +70,8 @@
                 <button type="submit">Send</button>
             </form>
         </section>
+        <div ng-repeat="conv in conversations">
+            <div class="bubble"></div>
+        </div>
     </body>
 </html>

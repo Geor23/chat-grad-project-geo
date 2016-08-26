@@ -107,9 +107,18 @@ module.exports = function(port, db, githubAuthoriser) {
         });
     });
 
+    app.get("/api/conv", function(req, res) { 
+        conversations.find().toArray(function(err, docs) {
+            if (!err) {
+                res.json(docs);
+            } else {
+                res.sendStatus(500);
+            }
+        });
+    });
+
 
     app.get("/api/messages", function(req, res) { 
-        console.log("Q: " + JSON.stringify(req.query));
         messages.find({ conv_id: req.query.conv_id }).toArray(function(err, docs) {
             if (!err) {
                 res.json(docs.map(function(msg) {
