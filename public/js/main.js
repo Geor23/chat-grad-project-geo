@@ -16,7 +16,8 @@
             $scope.inputno.push($scope.user.name);
             console.log($scope.inputno);
             $http.post("/api/conv", $scope.inputno).then(function(response){
-                $scope.getMessages($scope.user, $scope.messagingNow);
+                console.log(response.data);
+                //$scope.getMessages($scope.user, $scope.messagingNow);
             }, function(response) {
                 console.log(response);
             });
