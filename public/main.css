@@ -194,13 +194,6 @@ ul {
     position: relative;
     bottom: 0px;
     border: 2px solid black;
-    transition: width 1s;
-}
-
-.bubble:hover {
-    transition: 1s;
-    width: 200px;
-    height: 200px;
 }
 
 .bubble #popup {

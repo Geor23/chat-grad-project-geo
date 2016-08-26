@@ -5,6 +5,8 @@
         <title>Chat</title>
         <link rel="stylesheet" type="text/css" href="main.css">
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.1/angular.min.js"></script>
+        <link href="registered-users.html">
+        <link href="bubbles.html">
         <script src="js/main.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <!-- Latest compiled and minified CSS -->
@@ -17,23 +19,15 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     </head>
     <body ng-controller="ChatController">
+
         <a ng-show="!loggedIn" href="{{loginUri}}" style="text-align: center; top: 50%; left:50%; position: absolute">Log in</a>
+        
         <section ng-show="loggedIn" ng-init="getConv()">
             <p class="logged-in-as">Logged in as {{user.name}}.</p>
         </section>
-        <div ng-hide="!loggedIn" ng-class="!toggle ? 'menu-container-in' : 'menu-container-out'">
-            <div class="container" ng-click="toggle=!toggle">
-              <div ng-class="!toggle ? 'bar1' : 'bar1-change'"></div>
-              <div ng-class="!toggle ? 'bar2' : 'bar2-change'"></div>
-              <div ng-class="!toggle ? 'bar3' : 'bar3-change'"></div>
-            </div>
-            <h2 ng-show="toggle" class="reg">REGISTERED USERS</h2>
-            <ul ng-show="toggle">
-                <li ng-repeat="user in users">
-                    <div class="margin"><span class="users">{{user.name}}</span></div>
-                </li>
-            </ul>
-        </div>
+
+        <div ng-include="'registered-users.html'"></div>
+
         <div ng-hide="!loggedIn||showConversation" ng-class="ctoggle ? 'start-conv-container-open' : 'start-conv-container'">
             <div class="start-conv" ng-click="ctoggle = true">START CONVERSATION</div>
             <div class="conv-users-container" ng-show="ctoggle">
@@ -56,8 +50,9 @@
             </div>
             <div ng-show="ctoggle" class="chat-now-btn" ng-click="startConversation()">CHAT NOW</div>
         </div>
+
         <section ng-show="showConversation">
-            <p>Conversation with {{conv.users}}.</p>
+            <p>< {{conv.users}} ></p>
             <ul>
                 <li ng-repeat="msg in messages">
                     <div ng-if="msg.from==user._id&&msg.to==messagingNow.id">
@@ -70,10 +65,8 @@
                 <button type="submit">Send</button>
             </form>
         </section>
-        <div ng-hide="!loggedIn" class="bubble-container">
-            <div ng-repeat="conv in conversations track by $index" ng-style="{'align-self': aligs[$index]}">
-                <div class="bubble" ng-style="{'width': convSize[$index] + 'px', 'height': convSize[$index] + 'px', 'background-color': convCol[$index]}"><div id="popup">{{getListOfUsers(conv.users)}}</div></div>
-            </div>
-        </div>
+
+       <div ng-include="'bubbles.html'"></div>
+
     </body>
 </html>

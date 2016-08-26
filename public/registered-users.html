@@ -1,0 +1,13 @@
+<div ng-hide="!loggedIn" ng-class="!toggle ? 'menu-container-in' : 'menu-container-out'">
+    <div class="container" ng-click="toggle=!toggle">
+      <div ng-class="!toggle ? 'bar1' : 'bar1-change'"></div>
+      <div ng-class="!toggle ? 'bar2' : 'bar2-change'"></div>
+      <div ng-class="!toggle ? 'bar3' : 'bar3-change'"></div>
+    </div>
+    <h2 ng-show="toggle" class="reg">REGISTERED USERS</h2>
+    <ul ng-show="toggle">
+        <li ng-repeat="user in users">
+            <div class="margin"><span class="users">{{user.name}}</span></div>
+        </li>
+    </ul>
+</div>
