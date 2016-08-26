@@ -4,20 +4,19 @@
     app.controller("ChatController", function($scope, $http) {
         $scope.loggedIn = false;
         $scope.showConversation = false;
-        $scope.messagingNow = "";
         $scope.newMessage = "";
         $scope.messages = [];
         $scope.toggle = false;
         $scope.ctoggle = false;
         $scope.inputno = [];
-        $scope.convId = '';
+        $scope.conv = {};
 
         $scope.startConversation = function() {
             $scope.inputno.pop();
             $scope.inputno.push($scope.user.name);
             console.log($scope.inputno);
             $http.post("/api/conv", $scope.inputno).then(function(response){
-                $scope.convId = response.data;
+                $scope.conv = response.data;
                 $scope.getMessages();
                 //$scope.getMessages($scope.user, $scope.messagingNow);
             }, function(response) {
@@ -53,9 +52,8 @@
             console.log($scope.messagingNow);
             $scope.newMessage = "";
             var data = { 
-                    conv_id: $scope.convId,
+                    conv_id: $scope.conv._id,
                     from: $scope.user._id,
-                    to: $scope.messagingNow.id,
                     messageText: msg 
             };
             $http.post("/api/messages", data).then(function(response){
@@ -69,7 +67,7 @@
 
             $http.get("/api/messages", {
                 params: {
-                    conv_id: $scope.convId
+                    conv_id: $scope.conv._id
                 }
             })
                 .then(function(res) {

@@ -170,5 +170,21 @@ ul {
 }
 
 .enabled {
-    
+}
+
+.conv-users-container {
+    position: relative;
+    text-align: center;
+    margin: 10px 150px;
+    padding: 50px;
+    border: 1px dotted black;
+    overflow-y: auto;
+    z-index: 10;
+    height: 200px;
+}
+
+.add-user {
+    margin: 10px;
+    border-color: transparent;
+    background-color: transparent;
 }

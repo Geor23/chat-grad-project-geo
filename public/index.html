@@ -36,32 +36,31 @@
         </div>
         <div ng-hide="!loggedIn" ng-class="ctoggle ? 'start-conv-container-open' : 'start-conv-container'">
             <div class="start-conv" ng-click="ctoggle = true">START CONVERSATION</div>
-            <div ng-show="ctoggle" ng-init="inputno.push('Add User');">
+            <div class="conv-users-container" ng-show="ctoggle">
+                <div ng-init="inputno.push('Add User');">
+                    <div ng-repeat="i in inputno track by $index">
 
-                <div ng-repeat="i in inputno track by $index">
+                        <div class="dropdown">
 
-                    <div class="dropdown">
+                          <button class="dropdown-toggle add-user" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <div>{{i}} <span class="caret"></span></div>
+                          </button>
 
-                      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li ng-repeat="user in users" ng-class="isAlreadyInConv(user) ? 'disabled' : 'enabled'">
+                                <a href="#" ng-click="addUserToConv(user);">{{user.name}}</a>
+                            </li>
+                          </ul>
 
-                        <div>{{i}} <span class="caret"></span></div>
-
-                      </button>
-
-                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li ng-repeat="user in users" ng-class="isAlreadyInConv(user) ? 'disabled' : 'enabled'">
-                            <a href="#" ng-click="addUserToConv(user);">{{user.name}}</a>
-                        </li>
-                      </ul>
+                        </div>
 
                     </div>
-
                 </div>
             </div>
             <div ng-show="ctoggle" class="chat-now-btn" ng-click="startConversation()">CHAT NOW</div>
         </div>
         <section ng-show="showConversation">
-            <p>Conversation with {{messagingNow.name}}.</p>
+            <p>Conversation with {{conv.users}}.</p>
             <ul>
                 <li ng-repeat="msg in messages">
                     <div ng-if="msg.from==user._id&&msg.to==messagingNow.id">

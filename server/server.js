@@ -56,10 +56,10 @@ module.exports = function(port, db, githubAuthoriser) {
             console.log(conv);
              
             if (conv!==null) {
-                res.json(conv._id);
+                res.json(conv);
             } else {
                 conversations.insertOne({ users: req.body}, function(err, c) {
-                    res.json(c._id);
+                    res.json(c);
                 });
             } 
         });
