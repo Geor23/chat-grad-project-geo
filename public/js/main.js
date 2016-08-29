@@ -15,6 +15,7 @@
         $scope.convSize = [];
         $scope.convCol = [];
         $scope.aligs = [];
+        $scope.inputConvName = '';
 
         var int ;
 
@@ -51,6 +52,7 @@
         $scope.openConversation = function(conversation) {
             $scope.conv = conversation ;
             $scope.showConversation = true;
+            //opdate-last-opened
             int = $interval($scope.getMessages, 300);
         };
 
@@ -66,9 +68,14 @@
         };
 
         $scope.startConversation = function() {
+            var d = new Date();
             $scope.inputno.pop();
             $scope.inputno.push($scope.user.name);
-            $http.post("/api/conv", $scope.inputno).then(function(response){
+            $http.post("/api/conv", {
+                users: $scope.inputno,
+                conv_name: $scope.inputConvName,
+                time: d
+                }).then(function(response){
                 $scope.conv = response.data;
                 $scope.getMessages();
 
