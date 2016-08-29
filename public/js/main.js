@@ -52,6 +52,15 @@
             $scope.showConversation = true;
         };
 
+        $scope.clearConversation = function() {
+            var data = { conv_id: $scope.conv._id };
+            $http.post("/api/messages/clear", data).then(function(response){
+                $scope.getMessages();
+            }, function(response) {
+                console.log(response);
+            });
+        };
+
         $scope.startConversation = function() {
             $scope.inputno.pop();
             $scope.inputno.push($scope.user.name);
@@ -84,15 +93,18 @@
             console.log($scope.inputno);
         };
 
+
         $scope.sendMessage = function(msg) {
             $scope.newMessage = "";
+            var d = new Date();
             var data = { 
                     conv_id: $scope.conv._id,
                     from: $scope.user._id,
-                    messageText: msg 
+                    messageText: msg,
+                    time: d
             };
             $http.post("/api/messages", data).then(function(response){
-                $scope.getMessages($scope.user, $scope.messagingNow);
+                $scope.getMessages();
             }, function(response) {
                 console.log(response);
             });
@@ -106,7 +118,6 @@
                 }
             })
                 .then(function(res) {
-                    console.log(res.data);
                     $scope.conversations = res.data;
                     $scope.convSize = new Array($scope.conversations.length);
                     $scope.convCol = new Array($scope.conversations.length);

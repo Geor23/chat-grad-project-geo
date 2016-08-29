@@ -4,10 +4,11 @@
     <div class="conv-container">
         <ul><li ng-repeat="msg in messages">
             <div ng-if="msg.from==user._id&&msg.to==messagingNow.id">
-            From: {{msg.from}}, To: {{msg.to}}, Message: {{msg.messageText}}
+            From: {{msg.from}}, To: {{msg.to}}, Message: {{msg.messageText}}, Time: {{msg.time}}
             </div>
     </li></ul>
     </div>
+    <button type="button" ng-click="clearConversation()">Clear conversation</button>
 
     <form class="send-msg" ng-submit="sendMessage(newMessage)">
         <input style="width: 400px" type="text" ng-model="newMessage"></input>

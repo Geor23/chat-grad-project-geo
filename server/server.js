@@ -73,7 +73,19 @@ module.exports = function(port, db, githubAuthoriser) {
             conv_id: req.body.conv_id,
             fromUser: req.body.from,
             toUser: req.body.to,
-            messageText: req.body.messageText
+            messageText: req.body.messageText,
+            time: req.body.time
+        }, function(err) {
+            if (err)
+            res.sendStatus(401);
+            else res.sendStatus(200);
+        });
+        
+    });
+
+    app.post("/api/messages/clear", function(req, res){
+        messages.deleteMany({
+            conv_id: req.body.conv_id
         }, function(err) {
             if (err)
             res.sendStatus(401);
@@ -110,10 +122,8 @@ module.exports = function(port, db, githubAuthoriser) {
     app.get("/api/conv", function(req, res) { 
         conversations.find({ users: { "$in" : [req.query.user]} }).toArray(function(err, docs) {
             if (!err) {
-                console.log(docs);
                 res.json(docs);
             } else {
-                console.log(err);
                 res.sendStatus(500);
             }
         });
@@ -128,7 +138,8 @@ module.exports = function(port, db, githubAuthoriser) {
                         id: msg._id,
                         from: msg.fromUser,
                         to: msg.toUser,
-                        messageText: msg.messageText
+                        messageText: msg.messageText,
+                        time: msg.time
                     };
                 }));
             } else {
