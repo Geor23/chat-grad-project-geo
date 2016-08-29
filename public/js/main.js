@@ -16,6 +16,8 @@
         $scope.convCol = [];
         $scope.aligs = [];
 
+        var int ;
+
         $scope.getListOfUsers = function(arr) {
             var index = arr.indexOf($scope.user.name);
             if (index > -1)
@@ -48,9 +50,11 @@
 
         $scope.openConversation = function(conversation) {
             $scope.conv = conversation ;
-            $scope.getMessages();
             $scope.showConversation = true;
+            int = $interval($scope.getMessages, 300);
         };
+
+        
 
         $scope.clearConversation = function() {
             var data = { conv_id: $scope.conv._id };
@@ -128,7 +132,6 @@
         }
 
         $scope.getMessages = function() {
-
             $http.get("/api/messages", {
                 params: {
                     conv_id: $scope.conv._id
