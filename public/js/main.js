@@ -59,7 +59,7 @@
         $scope.clearConversation = function() {
             var data = { conv_id: $scope.conv._id };
             $http.post("/api/messages/clear", data).then(function(response){
-                $scope.getMessages();
+                //$scope.getMessages();
             }, function(response) {
                 console.log(response);
             });
