@@ -99,8 +99,14 @@
         };
 
         $scope.getConv = function() {
-            $http.get("/api/conv")
+
+            $http.get("/api/conv", {
+                params: {
+                    user: $scope.user.name
+                }
+            })
                 .then(function(res) {
+                    console.log(res.data);
                     $scope.conversations = res.data;
                     $scope.convSize = new Array($scope.conversations.length);
                     $scope.convCol = new Array($scope.conversations.length);
@@ -130,6 +136,7 @@
             $http.get("/api/users").then(function(result) {
                 $scope.users = result.data;
             });
+            $scope.getConv();
         }, function() {
             $http.get("/api/oauth/uri").then(function(result) {
                 $scope.loginUri = result.data.uri;

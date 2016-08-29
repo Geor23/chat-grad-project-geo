@@ -24,7 +24,7 @@
 
         <a ng-show="!loggedIn" href="{{loginUri}}" style="text-align: center; top: 50%; left:50%; position: absolute">Log in</a>
         
-        <section ng-show="loggedIn" ng-init="getConv()">
+        <section ng-show="loggedIn">
             <p class="logged-in-as">Logged in as {{user.name}}.</p>
         </section>
 

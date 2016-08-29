@@ -108,10 +108,12 @@ module.exports = function(port, db, githubAuthoriser) {
     });
 
     app.get("/api/conv", function(req, res) { 
-        conversations.find().toArray(function(err, docs) {
+        conversations.find({ users: { "$in" : [req.query.user]} }).toArray(function(err, docs) {
             if (!err) {
+                console.log(docs);
                 res.json(docs);
             } else {
+                console.log(err);
                 res.sendStatus(500);
             }
         });
