@@ -1,7 +1,7 @@
 (function() {
     var app = angular.module("ChatApp", []);
 
-    app.controller("ChatController", function($scope, $http) {
+    app.controller("ChatController", function($scope, $http, $interval) {
         $scope.loggedIn = false;
         $scope.showConversation = false;
         $scope.newMessage = "";
@@ -135,6 +135,7 @@
                 }
             })
                 .then(function(res) {
+                    console.log(res.data);
                     $scope.messages = res.data;
                     }, function(response) {
                     }

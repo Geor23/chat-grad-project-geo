@@ -72,7 +72,6 @@ module.exports = function(port, db, githubAuthoriser) {
         messages.insertOne({
             conv_id: req.body.conv_id,
             fromUser: req.body.from,
-            toUser: req.body.to,
             messageText: req.body.messageText,
             time: req.body.time
         }, function(err) {
@@ -133,11 +132,11 @@ module.exports = function(port, db, githubAuthoriser) {
     app.get("/api/messages", function(req, res) { 
         messages.find({ conv_id: req.query.conv_id }).toArray(function(err, docs) {
             if (!err) {
+                console.log(docs);
                 res.json(docs.map(function(msg) {
                     return {
                         id: msg._id,
                         from: msg.fromUser,
-                        to: msg.toUser,
                         messageText: msg.messageText,
                         time: msg.time
                     };
