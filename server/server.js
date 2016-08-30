@@ -56,7 +56,8 @@ module.exports = function(port, db, githubAuthoriser) {
 
         conversations.insertOne({ 
             users: req.body.users,
-            name: req.body.name
+            name: req.body.name,
+            last_msg: req.body.time
         }, function(err, c) {
             res.json(c);
 
@@ -85,6 +86,17 @@ module.exports = function(port, db, githubAuthoriser) {
         res.sendStatus(200);
     });
 
+    // get all the conversations that a specific user belongs to
+    app.get("/api/lastopened", function(req, res) { 
+
+        last_opened.find({ user: req.query.user }).toArray(function(err, docs) {
+            if (!err) {
+                res.json(docs);
+            } else {
+                res.sendStatus(500);
+            }
+        });
+    });
 
     // get all the conversations that a specific user belongs to
     app.get("/api/conv", function(req, res) { 
@@ -107,6 +119,7 @@ module.exports = function(port, db, githubAuthoriser) {
             messageText: req.body.messageText,
             time: req.body.time
         });
+        updateLastMsg(req.body.time, req.body.conv_id);
         res.sendStatus(200);
     });
 
@@ -169,6 +182,17 @@ module.exports = function(port, db, githubAuthoriser) {
             }
         });
     });
+
+    function updateLastMsg(date, conv_id) {
+        conversations.update({
+            _id: conv_id
+        },
+        {
+            $set: {
+                last_msg: date
+            }
+        });
+    }
 
     return app.listen(port);
 };
