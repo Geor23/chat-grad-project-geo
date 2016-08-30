@@ -56,7 +56,7 @@ module.exports = function(port, db, githubAuthoriser) {
 
         conversations.insertOne({ 
             users: req.body.users,
-            name: req.body.conv_name
+            name: req.body.name
         }, function(err, c) {
             res.json(c);
 
@@ -74,7 +74,7 @@ module.exports = function(port, db, githubAuthoriser) {
     // update the last time the conversation was opened
     app.post("/api/lastopened", function(req, res) {
         last_opened.update({
-            user: user,
+            user: req.body.user,
             conv_id: req.body.conv_id
         },
         {
@@ -82,6 +82,7 @@ module.exports = function(port, db, githubAuthoriser) {
                 last_opened: req.body.time
             }
         });
+        res.sendStatus(200);
     });
 
 
@@ -100,33 +101,22 @@ module.exports = function(port, db, githubAuthoriser) {
 
     // insert a message someone just sent
     app.post("/api/messages", function(req, res) {
-
         messages.insertOne({
             conv_id: req.body.conv_id,
-            fromUser: req.body.from,
+            from: req.body.from,
             messageText: req.body.messageText,
             time: req.body.time
         });
-        
+        res.sendStatus(200);
     });
 
 
     // get all messages from a conversation
     app.get("/api/messages", function(req, res) { 
-
         messages.find({ conv_id: req.query.conv_id }).toArray(function(err, docs) {
 
             if (!err) {
-                res.json(docs.map(function(msg) {
-
-                    return {
-                        id: msg._id,
-                        from: msg.fromUser,
-                        messageText: msg.messageText,
-                        time: msg.time
-                    };
-                }));
-
+                res.json(docs);
             } else {
                 res.sendStatus(500);
             }
@@ -173,13 +163,7 @@ module.exports = function(port, db, githubAuthoriser) {
     app.get("/api/users", function(req, res) {
         users.find().toArray(function(err, docs) {
             if (!err) {
-                res.json(docs.map(function(user) {
-                    return {
-                        id: user._id,
-                        name: user.name,
-                        avatarUrl: user.avatarUrl
-                    };
-                }));
+                res.json(docs);
             } else {
                 res.sendStatus(500);
             }
