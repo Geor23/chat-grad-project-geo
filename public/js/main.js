@@ -24,7 +24,7 @@
         $scope.inputno = [];
         $scope.inputConvName = '';
 
-        var int ;
+        var int, int_conv ;
 
 
 
@@ -93,7 +93,9 @@
                     $scope.conversations = res.data;
                     $scope.convSize = new Array($scope.conversations.length);
                     $scope.convCol = new Array($scope.conversations.length);
+                    $scope.aligs = new Array($scope.conversations.length);
                     $scope.setRandom();
+                    int_conv = $interval(updateConvAndSetNotification, 1000);
                     }, function(response) {
                     }
                 );
@@ -113,6 +115,48 @@
                 }
             );
         };
+
+        function updateConvAndSetNotification() {
+            $http.get("/api/conv", {
+                params: {
+                    user: $scope.user._id
+                }
+            })
+                .then(function(res) {
+
+                    if ($scope.conversations.length<res.data.length) {
+                        for (var i = $scope.conversations.length; i<res.data.length; i++) {
+                            $scope.conversations.push(res.data[i]);
+                            $scope.convSize.push(getRandomSize());
+                            $scope.convCol.push(getRandomColor());
+                            $scope.aligs.push(getRandomAlign());
+                        }
+                    }
+
+                    //  $http.get("/api/lastopened", {
+                    //     params: {
+                    //         user: $scope.user._id
+                    //     }
+                    // })
+                    //     .then(function(resp) {
+                    //         $scope.conversations = res.data;
+                    //         $scope.convSize = new Array($scope.conversations.length);
+                    //         $scope.convCol = new Array($scope.conversations.length);
+                    //         $scope.setRandom(updateConvAndSetNotification, 1000);
+                    //         int_conv = $interval();
+                    //         }, function(response) {
+                    //         }
+                    //     );
+
+                    // $scope.conversations = res.data;
+                    // $scope.convSize = new Array($scope.conversations.length);
+                    // $scope.convCol = new Array($scope.conversations.length);
+                    // $scope.setRandom(updateConvAndSetNotification, 1000);
+                    // int_conv = $interval();
+                    }, function(response) {
+                    }
+                );
+        }
 
         function updateLastOpened() {
             var d = new Date();
