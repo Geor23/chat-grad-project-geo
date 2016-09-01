@@ -73,6 +73,33 @@ module.exports = function(port, db, githubAuthoriser) {
     });
 
 
+    app.post("/api/conv/rem/users", function(req, res) {
+
+
+        lastopened.deleteOne(
+            { $and: [
+                {user : req.body.user}, 
+                {conv_id : ObjectId(req.body.conv_id)} 
+            ]}, function(err) {
+            if (err) res.sendStatus(401);
+            else res.sendStatus(200);
+        });
+
+        conversations.updateOne(
+            { _id: ObjectId(req.body.conv_id) },
+            { $pull: {users: req.body.user} }
+        );
+
+    });
+
+    app.post("/api/conv/add/users", function(req, res) {
+
+        conversations.find({ _id: ObjectId(req.body.conv_id) }).toArray(function(err, docs) { console.log(docs);});
+
+    });
+
+
+
     // update the last time the conversation was opened
     app.post("/api/lastopened", function(req, res) {
         lastopened.updateOne(

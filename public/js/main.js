@@ -26,7 +26,26 @@
 
         var int, int_conv ;
 
+        $scope.leaveConversation = function() {
+            
+            var data = {
+                 conv_id: $scope.conv._id, 
+                 user: $scope.user._id 
+            };
+            console.log(data);
+            $http.post("/api/conv/rem/users", data).then(function(response){
+                console.log(response);
+            });
+            stopAndBackToHome();
+            // send request to delete user from conv
+        };
 
+        function stopAndBackToHome() {
+            $scope.showConversation = false;
+            $scope.conv = undefined;
+            $interval.cancel(int);
+            int = undefined;
+        }
 
         $scope.openConversation = function(conversation) {
             $scope.conv = conversation ;
@@ -125,6 +144,7 @@
                 .then(function(res) {
 
                     pushNewConv($scope.conversations.length, res.data);
+                    popDeletedConv($scope.conversations, res.data);
 
                      $http.get("/api/lastopened", {
                         params: {
@@ -160,6 +180,17 @@
         }
 
         function pushNewConv(l1, l2) {
+            if (l1<l2.length) {
+                for (var i = l1; i<l2.length; i++) {
+                    $scope.conversations.push(l2[i]);
+                    $scope.convSize.push(getRandomSize());
+                    $scope.convCol.push(getRandomColor());
+                    $scope.aligs.push(getRandomAlign());
+                }
+            }
+        }
+
+        function popDeletedConv(l1, l2) {
             if (l1<l2.length) {
                 for (var i = l1; i<l2.length; i++) {
                     $scope.conversations.push(l2[i]);
