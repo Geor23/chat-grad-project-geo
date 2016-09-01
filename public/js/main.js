@@ -143,8 +143,7 @@
             })
                 .then(function(res) {
 
-                    pushNewConv($scope.conversations.length, res.data);
-                    popDeletedConv($scope.conversations, res.data);
+                    updateConv($scope.conversations, res.data);
 
                      $http.get("/api/lastopened", {
                         params: {
@@ -179,24 +178,24 @@
                     });
         }
 
-        function pushNewConv(l1, l2) {
-            if (l1<l2.length) {
-                for (var i = l1; i<l2.length; i++) {
+        function updateConv(l1, l2) {
+            if (l1.length<l2.length) {
+                for (var i = l1.length; i<l2.length; i++) {
                     $scope.conversations.push(l2[i]);
                     $scope.convSize.push(getRandomSize());
                     $scope.convCol.push(getRandomColor());
                     $scope.aligs.push(getRandomAlign());
                 }
             }
-        }
 
-        function popDeletedConv(l1, l2) {
-            if (l1<l2.length) {
-                for (var i = l1; i<l2.length; i++) {
-                    $scope.conversations.push(l2[i]);
-                    $scope.convSize.push(getRandomSize());
-                    $scope.convCol.push(getRandomColor());
-                    $scope.aligs.push(getRandomAlign());
+            else if (l1.length>l2.length) {
+                console.log(l1.length + " - " + l2.length);
+                for (var i = 0; i<l1.length; i++) {
+                    console.log("got here");
+                    console.log(l2.indexOf(l1[i]));
+                    if (l2.indexOf(l1[i])<0) {
+                        $scope.conversations.splice(i, 1);
+                    }
                 }
             }
         }
