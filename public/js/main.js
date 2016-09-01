@@ -32,12 +32,22 @@
                  conv_id: $scope.conv._id, 
                  user: $scope.user._id 
             };
-            console.log(data);
             $http.post("/api/conv/rem/users", data).then(function(response){
                 console.log(response);
             });
             stopAndBackToHome();
-            // send request to delete user from conv
+        };
+
+         $scope.addUsersToConversation = function() {
+            
+            var data = {
+                 conv_id: $scope.conv._id, 
+                 user: $scope.user._id 
+            };
+            $http.post("/api/conv/rem/users", data).then(function(response){
+                console.log(response);
+            });
+            stopAndBackToHome();
         };
 
         function stopAndBackToHome() {
@@ -233,22 +243,14 @@
 
 
         $scope.isAlreadyInConv = function(user) {
-
-            for (var i =0; i<$scope.inputno.length; i++) {
-                if ($scope.inputno[i] == user._id) {
-                    return true;
-                }
-            }
-            return false;
+            return $scope.inputno.indexOf(user._id)>0;
         };
 
         $scope.addUserToConv = function(user) {
-            for (var i =0; i<$scope.inputno.length; i++) {
-                if ($scope.inputno[i] == "Add User") {
-                    $scope.inputno[i] = user._id;
-                }
-            }
-            $scope.inputno.push("Add User");
+            console.log($scope.inputno);
+            if ($scope.inputno.indexOf(user._id)<0)
+                $scope.inputno.push(user._id);
+            else $scope.inputno.splice($scope.inputno.indexOf(user._id), 1);
         };
 
 

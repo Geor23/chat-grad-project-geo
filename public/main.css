@@ -183,6 +183,15 @@ ul {
 }
 
 .enabled {
+    opacity: 1;
+    color: black;
+    background-color: transparent;
+}
+
+.disabled {
+    opacity: 0.5;
+    color: red;
+    background-color: grey
 }
 
 .conv-users-container {
