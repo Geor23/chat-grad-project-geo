@@ -124,42 +124,63 @@
             })
                 .then(function(res) {
 
-                    if ($scope.conversations.length<res.data.length) {
-                        for (var i = $scope.conversations.length; i<res.data.length; i++) {
-                            $scope.conversations.push(res.data[i]);
-                            $scope.convSize.push(getRandomSize());
-                            $scope.convCol.push(getRandomColor());
-                            $scope.aligs.push(getRandomAlign());
+                    pushNewConv($scope.conversations.length, res.data);
+
+                     $http.get("/api/lastopened", {
+                        params: {
+                            user: $scope.user._id
                         }
-                    }
+                    })
+                        .then(function(resp) {
 
-                    //  $http.get("/api/lastopened", {
-                    //     params: {
-                    //         user: $scope.user._id
-                    //     }
-                    // })
-                    //     .then(function(resp) {
-                    //         $scope.conversations = res.data;
-                    //         $scope.convSize = new Array($scope.conversations.length);
-                    //         $scope.convCol = new Array($scope.conversations.length);
-                    //         $scope.setRandom(updateConvAndSetNotification, 1000);
-                    //         int_conv = $interval();
-                    //         }, function(response) {
-                    //         }
-                    //     );
+                            $scope.conversations.forEach(function(conv) {
+                                //console.log(conv._id);
+                                //console.log(resp.data);
+                                var time;
+                                resp.data.forEach(function(obj) {
+                                    if (obj.conv_id === conv._id)
+                                        time = obj.last_opened;
+                                });
 
-                    // $scope.conversations = res.data;
-                    // $scope.convSize = new Array($scope.conversations.length);
-                    // $scope.convCol = new Array($scope.conversations.length);
-                    // $scope.setRandom(updateConvAndSetNotification, 1000);
-                    // int_conv = $interval();
-                    }, function(response) {
-                    }
-                );
+                                console.log(time);
+                                console.log(conv.last_msg);
+                                console.log(time === conv.last_msg);
+                                if (conv.last_msg > time ) {
+                                    // pull no of unred msg from server
+                                    // set conv unread_msg to unred
+                                    getCountUnreadMsg(conv._id, time);
+                                }
+                            });
+
+                        });
+                    });
+        }
+
+        function pushNewConv(l1, l2) {
+            if (l1<l2.length) {
+                for (var i = l1; i<l2.length; i++) {
+                    $scope.conversations.push(l2[i]);
+                    $scope.convSize.push(getRandomSize());
+                    $scope.convCol.push(getRandomColor());
+                    $scope.aligs.push(getRandomAlign());
+                }
+            }
+        }
+
+        function getCountUnreadMsg(id, time) {
+            $http.get("/api/messagescount", {
+                params: {
+                    conv_id: id,
+                    time: time
+                }
+            }).then(function(res) {
+                console.log(res.data);
+            });
         }
 
         function updateLastOpened() {
             var d = new Date();
+            console.log("updating last opened");
             var data = {
                     user: $scope.user._id,
                     conv_id: $scope.conv._id,

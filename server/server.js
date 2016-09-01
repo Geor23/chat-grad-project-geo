@@ -1,6 +1,7 @@
 var express = require("express");
 var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
+var ObjectId = require('mongodb').ObjectID;
 
 module.exports = function(port, db, githubAuthoriser) {
     var app = express();
@@ -12,7 +13,7 @@ module.exports = function(port, db, githubAuthoriser) {
     var users = db.collection("users");
     var messages = db.collection("messages");
     var conversations = db.collection("conversations");
-    var last_opened = db.collection("lastopened");
+    var lastopened = db.collection("lastopened");
     var sessions = {};
 
     app.get("/oauth", function(req, res) {
@@ -57,15 +58,15 @@ module.exports = function(port, db, githubAuthoriser) {
         conversations.insertOne({ 
             users: req.body.users,
             name: req.body.name,
-            last_msg: req.body.time
+            last_msg: new Date(req.body.time)
         }, function(err, c) {
             res.json(c);
-
             req.body.users.forEach(function(user){
-                last_opened.insertOne({
+                lastopened.insertOne({
                     user: user,
-                    conv_id: c._id,
-                    last_opened: req.body.time
+                    conv_id: c.insertedId,
+                    last_opened: new Date(req.body.time)
+                }, function(err, docs) {
                 });
             });
         });
@@ -74,23 +75,22 @@ module.exports = function(port, db, githubAuthoriser) {
 
     // update the last time the conversation was opened
     app.post("/api/lastopened", function(req, res) {
-        last_opened.update({
-            user: req.body.user,
-            conv_id: req.body.conv_id
-        },
-        {
-            $set: {
-                last_opened: req.body.time
-            }
-        });
+        lastopened.updateOne(
+            { $and: [
+                {user : req.body.user}, 
+                {conv_id : ObjectId(req.body.conv_id)} 
+            ]} ,
+            { $set: { "last_opened" : new Date(req.body.time) } } 
+        );
         res.sendStatus(200);
     });
 
     // get all the conversations that a specific user belongs to
     app.get("/api/lastopened", function(req, res) { 
-
-        last_opened.find({ user: req.query.user }).toArray(function(err, docs) {
+        //messages.drop(); conversations.drop(); lastopened.drop();
+        lastopened.find({ user: req.query.user }).toArray(function(err, docs) {
             if (!err) {
+                console.log("last opened " + JSON.stringify(docs) + "\n\n");
                 res.json(docs);
             } else {
                 res.sendStatus(500);
@@ -117,9 +117,9 @@ module.exports = function(port, db, githubAuthoriser) {
             conv_id: req.body.conv_id,
             from: req.body.from,
             messageText: req.body.messageText,
-            time: req.body.time
+            time: new Date(req.body.time)
         });
-        updateLastMsg(req.body.time, req.body.conv_id);
+        updateLastMsg(new Date(req.body.time), req.body.conv_id);
         res.sendStatus(200);
     });
 
@@ -128,6 +128,21 @@ module.exports = function(port, db, githubAuthoriser) {
     app.get("/api/messages", function(req, res) { 
         messages.find({ conv_id: req.query.conv_id }).toArray(function(err, docs) {
 
+            if (!err) {
+                res.json(docs);
+            } else {
+                res.sendStatus(500);
+            }
+        });
+    });
+
+    // get a count for unread msgs in a conv
+    app.get("/api/messagescount", function(req, res) { 
+        messages.count({ 
+            conv_id: req.query.conv_id,
+            time: { $gt: new Date(req.query.time) } 
+        }, function(err, docs) {
+            console.log(docs);
             if (!err) {
                 res.json(docs);
             } else {
