@@ -90,7 +90,6 @@ module.exports = function(port, db, githubAuthoriser) {
         //messages.drop(); conversations.drop(); lastopened.drop();
         lastopened.find({ user: req.query.user }).toArray(function(err, docs) {
             if (!err) {
-                console.log("last opened " + JSON.stringify(docs) + "\n\n");
                 res.json(docs);
             } else {
                 res.sendStatus(500);
@@ -136,13 +135,15 @@ module.exports = function(port, db, githubAuthoriser) {
         });
     });
 
+
     // get a count for unread msgs in a conv
     app.get("/api/messagescount", function(req, res) { 
-        messages.count({ 
-            conv_id: req.query.conv_id,
-            time: { $gt: new Date(req.query.time) } 
+        messages.count({
+            $and: [
+                { conv_id: req.query.conv_id },
+                { time: { $gt: new Date(req.query.time) } }
+            ]      
         }, function(err, docs) {
-            console.log(docs);
             if (!err) {
                 res.json(docs);
             } else {
@@ -200,7 +201,7 @@ module.exports = function(port, db, githubAuthoriser) {
 
     function updateLastMsg(date, conv_id) {
         conversations.update({
-            _id: conv_id
+            _id: ObjectId(conv_id)
         },
         {
             $set: {

@@ -142,9 +142,6 @@
                                         time = obj.last_opened;
                                 });
 
-                                console.log(time);
-                                console.log(conv.last_msg);
-                                console.log(time === conv.last_msg);
                                 if (conv.last_msg > time ) {
                                     // pull no of unred msg from server
                                     // set conv unread_msg to unred
@@ -180,7 +177,6 @@
 
         function updateLastOpened() {
             var d = new Date();
-            console.log("updating last opened");
             var data = {
                     user: $scope.user._id,
                     conv_id: $scope.conv._id,
