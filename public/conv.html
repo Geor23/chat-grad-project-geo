@@ -8,6 +8,15 @@
     </div>
     <button type="button" ng-click="clearConversation()">Clear conversation</button>
     <button type="button" ng-click="leaveConversation()">Leave conversation</button>
+    <button type="button" ng-click="showUsers=true">Add Users To Conversation</button>
+    <div ng-show="showUsers">
+        <ul ng-init="inputno=[]">
+          <li ng-repeat="user in users" ng-if="conv.users.indexOf(user._id)<0" ng-class="isAlreadyInConv(user) ? 'disabled' : 'enabled'">
+              <a ng-click="addUserToConv(user);">{{user.name}}</a>
+          </li>
+        </ul>
+        <button type="button" ng-click="addUsersToConversation()">Add</button>
+    </div>
     <form class="send-msg" ng-submit="sendMessage(newMessage)">
         <input style="width: 400px" type="text" ng-model="newMessage"></input>
         <button type="submit">Send</button>

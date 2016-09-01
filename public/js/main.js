@@ -39,15 +39,14 @@
         };
 
          $scope.addUsersToConversation = function() {
-            
+            console.log("addding");
             var data = {
                  conv_id: $scope.conv._id, 
-                 user: $scope.user._id 
+                 users: $scope.inputno 
             };
-            $http.post("/api/conv/rem/users", data).then(function(response){
+            $http.post("/api/conv/add/users", data).then(function(response){
                 console.log(response);
             });
-            stopAndBackToHome();
         };
 
         function stopAndBackToHome() {
@@ -72,11 +71,8 @@
         };
 
         $scope.startConversation = function(name) {
-            console.log(name);
             var d = new Date();
-            $scope.inputno.pop();
             $scope.inputno.push($scope.user._id);
-
             var data = {
                 users: $scope.inputno,
                 name: name,
@@ -243,14 +239,14 @@
 
 
         $scope.isAlreadyInConv = function(user) {
-            return $scope.inputno.indexOf(user._id)>0;
+            return $scope.inputno.indexOf(user._id)>=0;
         };
 
         $scope.addUserToConv = function(user) {
-            console.log($scope.inputno);
             if ($scope.inputno.indexOf(user._id)<0)
                 $scope.inputno.push(user._id);
             else $scope.inputno.splice($scope.inputno.indexOf(user._id), 1);
+            console.log($scope.inputno);
         };
 
 

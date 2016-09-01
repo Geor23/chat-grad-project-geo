@@ -93,7 +93,11 @@ module.exports = function(port, db, githubAuthoriser) {
     });
 
     app.post("/api/conv/add/users", function(req, res) {
-
+        console.log("addding");
+        conversations.updateOne(
+            { _id: ObjectId(req.body.conv_id) },
+            { $pushAll: {users: req.body.users} }
+        );
         conversations.find({ _id: ObjectId(req.body.conv_id) }).toArray(function(err, docs) { console.log(docs);});
 
     });
