@@ -134,8 +134,6 @@
                         .then(function(resp) {
 
                             $scope.conversations.forEach(function(conv) {
-                                //console.log(conv._id);
-                                //console.log(resp.data);
                                 var time;
                                 resp.data.forEach(function(obj) {
                                     if (obj.conv_id === conv._id)
@@ -143,9 +141,17 @@
                                 });
 
                                 if (conv.last_msg > time ) {
-                                    // pull no of unred msg from server
-                                    // set conv unread_msg to unred
-                                    getCountUnreadMsg(conv._id, time);
+
+                                    $http.get("/api/messagescount", {
+                                        params: {
+                                            conv_id: conv._id,
+                                            time: time
+                                        }
+                                    }).then(function(res) {
+                                        conv.unread = res.data;
+                                    });
+                                } else {
+                                    conv.unread = 0;
                                 }
                             });
 
@@ -162,17 +168,6 @@
                     $scope.aligs.push(getRandomAlign());
                 }
             }
-        }
-
-        function getCountUnreadMsg(id, time) {
-            $http.get("/api/messagescount", {
-                params: {
-                    conv_id: id,
-                    time: time
-                }
-            }).then(function(res) {
-                console.log(res.data);
-            });
         }
 
         function updateLastOpened() {
