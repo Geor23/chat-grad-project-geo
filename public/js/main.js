@@ -2,9 +2,8 @@
     var app = angular.module("ChatApp", []);
 
     app.controller("ChatController", function($scope, $http, $interval) {
-        
-        /* 
-            DESIGN VARIABLES 
+        /*
+            DESIGN VARIABLES
         */
         $scope.loggedIn = false;
         $scope.showConversation = false;
@@ -14,51 +13,49 @@
         $scope.convCol = [];
         $scope.aligs = [];
         $scope.edittingName = false;
-        var colors = ['rgba(65, 0, 0, 0.5)', 'rgba(241, 18, 18, 0.5)', 'rgba(237, 241, 18, 0.5)', 'rgba(104, 241, 18, 0.5)', 'rgba(47, 108, 8, 0.5)', 'rgba(40, 244, 112, 0.5)', 'rgba(40, 244, 210, 0.5)', 'rgba(5, 112, 94, 0.5)', 'rgba(34, 170, 204, 0.5)', 'rgba(34, 37, 204, 0.5)', 'rgba(5, 6, 101, 0.5)', 'rgba(107, 32, 238, 0.5)', 'rgba(43, 7, 104, 0.5)', 'rgba(104, 43, 7, 0.5)', 'rgba(20, 104, 7, 0.5)', 'rgba(7, 20, 104, 0.5)', 'rgba(96, 7, 104, 0.5)', 'rgba(218, 12, 237, 0.5)', 'rgba(222, 16, 133, 0.5)', 'rgba(222, 16, 58, 0.5)', 'rgba(147, 0, 29, 0.5)', 'rgba(216, 12, 16, 0.5)'];
-        var align = ['flex-start', 'flex-end', 'center', 'baseline' , 'stretch' ]
+        var colors = ["rgba(218, 12, 237, 0.5)", "rgba(20, 104, 7, 0.5)", "rgba(7, 20, 104, 0.5)"];
+        colors.push.apply(colors, ["rgba(216, 12, 16, 0.5)", "rgba(147, 0, 29, 0.5)", "rgba(222, 16, 58, 0.5)"]);
+        colors.push.apply(colors, ["rgba(222, 16, 133, 0.5)", "rgba(241, 18, 18, 0.5)", "rgba(237, 241, 18, 0.5)"]);
+        colors.push.apply(colors, ["rgba(40, 244, 112, 0.5)", "rgba(40, 244, 210, 0.5)", "rgba(5, 112, 94, 0.5)"]);
+        colors.push.apply(colors, ["rgba(34, 170, 204, 0.5)", "rgba(34, 37, 204, 0.5)", "rgba(5, 6, 101, 0.5)"]);
+        colors.push.apply(colors, ["rgba(107, 32, 238, 0.5)", "rgba(43, 7, 104, 0.5)", "rgba(104, 43, 7, 0.5)"]);
+        var align = ["flex-start", "flex-end", "center", "baseline" , "stretch"];
 
-
-        /* 
-            DATA INPUT VARIABLES 
+        /*
+            DATA INPUT VARIABLES
         */
         $scope.newMessage = "";
         $scope.inputno = [];
-        $scope.inputConvName = '';
+        $scope.inputConvName = "";
 
-        var int, int_conv ;
+        var int;
+        var int_conv ;
 
         $scope.leaveConversation = function() {
-            
             var data = {
-                 conv_id: $scope.conv._id, 
-                 user: $scope.user._id 
+                conv_id: $scope.conv._id,
+                user: $scope.user._id
             };
-            $http.post("/api/conv/rem/users", data).then(function(response){
-                console.log(response);
+            $http.post("/api/conv/rem/users", data).then(function(response) {
             });
             stopAndBackToHome();
         };
 
         $scope.updateNameConv = function() {
-
             var data = {
-                 conv_id: $scope.conv._id, 
-                 name: $scope.conv.name 
+                conv_id: $scope.conv._id,
+                name: $scope.conv.name
             };
-            $http.post("/api/conv/name", data).then(function(response){
-                console.log(response);
-                
+            $http.post("/api/conv/name", data).then(function(response) {
             });
-
         };
 
         $scope.addUsersToConversation = function() {
             var data = {
-                 conv_id: $scope.conv._id, 
-                 users: $scope.inputno 
+                conv_id: $scope.conv._id,
+                users: $scope.inputno
             };
-            $http.post("/api/conv/add/users", data).then(function(response){
-                console.log(response);
+            $http.post("/api/conv/add/users", data).then(function(response) {
             });
         };
 
@@ -70,16 +67,15 @@
         }
 
         $scope.openConversation = function(conversation) {
-            $scope.conv = conversation ;
+            $scope.conv = conversation;
             $scope.showConversation = true;
             int = $interval($scope.getMessages, 300);
         };
 
         $scope.clearConversation = function() {
-            var data = { conv_id: $scope.conv._id };
-            $http.post("/api/messages/clear", data).then(function(response){
+            var data = {conv_id: $scope.conv._id};
+            $http.post("/api/messages/clear", data).then(function(response) {
             }, function(response) {
-                console.log(response);
             });
         };
 
@@ -91,37 +87,30 @@
                 name: name,
                 time: d
             };
-
             $http.post("/api/conv", data).then(function(response) {
-
                 $scope.conv = response.data;
                 $scope.getMessages();
-
             }, function(response) {
-                console.log(response);
             });
-
             $scope.showConversation = true;
         };
 
         $scope.sendMessage = function(msg) {
             var d = new Date();
-            var data = { 
+            var data = {
                 conv_id: $scope.conv._id,
                 from: $scope.user._id,
                 messageText: msg,
                 time: d
             };
-            $http.post("/api/messages", data).then(function(response){
+            $http.post("/api/messages", data).then(function(response) {
                 $scope.getMessages();
                 $scope.newMessage = "";
             }, function(response) {
-                console.log(response);
             });
         };
 
         $scope.getConv = function() {
-
             $http.get("/api/conv", {
                 params: {
                     user: $scope.user._id
@@ -134,13 +123,12 @@
                     $scope.aligs = new Array($scope.conversations.length);
                     $scope.setRandom();
                     int_conv = $interval(updateConvAndSetNotification, 1000);
-                    }, function(response) {
-                    }
-                );
+                }, function(response) {
+                }
+            );
         };
 
         $scope.getMessages = function() {
-
             $http.get("/api/messages", {
                 params: {
                     conv_id: $scope.conv._id
@@ -161,25 +149,22 @@
                 }
             })
                 .then(function(res) {
-
                     updateConv($scope.conversations, res.data);
-
-                     $http.get("/api/lastopened", {
+                    $http.get("/api/lastopened", {
                         params: {
                             user: $scope.user._id
                         }
                     })
                         .then(function(resp) {
-
                             $scope.conversations.forEach(function(conv) {
                                 var time;
                                 resp.data.forEach(function(obj) {
-                                    if (obj.conv_id === conv._id)
+                                    if (obj.conv_id === conv._id) {
                                         time = obj.last_opened;
+                                    }
                                 });
 
-                                if (conv.last_msg > time ) {
-
+                                if (conv.last_msg > time) {
                                     $http.get("/api/messagescount", {
                                         params: {
                                             conv_id: conv._id,
@@ -192,27 +177,22 @@
                                     conv.unread = 0;
                                 }
                             });
-
                         });
-                    });
+                });
         }
 
         function updateConv(l1, l2) {
-            if (l1.length<l2.length) {
-                for (var i = l1.length; i<l2.length; i++) {
+            var i;
+            if (l1.length < l2.length) {
+                for (i = l1.length; i < l2.length; i++) {
                     $scope.conversations.push(l2[i]);
                     $scope.convSize.push(getRandomSize());
                     $scope.convCol.push(getRandomColor());
                     $scope.aligs.push(getRandomAlign());
                 }
-            }
-
-            else if (l1.length>l2.length) {
-                console.log(l1.length + " - " + l2.length);
-                for (var i = 0; i<l1.length; i++) {
-                    console.log("got here");
-                    console.log(l2.indexOf(l1[i]));
-                    if (l2.indexOf(l1[i])<0) {
+            } else if (l1.length > l2.length) {
+                for (i = 0; i < l1.length; i++) {
+                    if (l2.indexOf(l1[i]) < 0) {
                         $scope.conversations.splice(i, 1);
                     }
                 }
@@ -226,7 +206,6 @@
                     conv_id: $scope.conv._id,
                     time: d
                 };
-
             $http.post("/api/lastopened", data).then(function(response) {
             });
         }
@@ -244,61 +223,56 @@
             });
         });
 
-
-
         /*
             DESIGN FUNCTIONS
         */
-
-
         $scope.isAlreadyInConv = function(user) {
-            return $scope.inputno.indexOf(user._id)>=0;
+            return $scope.inputno.indexOf(user._id) >= 0;
         };
 
         $scope.addUserToConv = function(user) {
-            if ($scope.inputno.indexOf(user._id)<0)
+            if ($scope.inputno.indexOf(user._id) < 0) {
                 $scope.inputno.push(user._id);
-            else $scope.inputno.splice($scope.inputno.indexOf(user._id), 1);
-            console.log($scope.inputno);
+            }
+            else {
+                $scope.inputno.splice($scope.inputno.indexOf(user._id), 1);
+            }
         };
-
 
         $scope.getUserNameFromId = function(userid) {
             $scope.users.forEach(function(user) {
-                if ( user._id === userid )
+                if (user._id === userid) {
                     return user.name;
+                }
             });
         };
 
         $scope.getListOfUsers = function(arr) {
             var index = arr.indexOf($scope.user._id);
-            if (index > -1)
+            if (index > -1) {
                 arr.splice(arr.indexOf($scope.user._id), 1);
-            return arr.join(', ');
-        }; 
-
+            }
+            return arr.join(", ");
+        };
 
         $scope.setRandom = function() {
-            for (var i = 0; i < $scope.conversations.length; i++ ) {
+            for (var i = 0; i < $scope.conversations.length; i++) {
                 $scope.convSize[i] = getRandomSize();
                 $scope.convCol[i] = getRandomColor();
                 $scope.aligs[i] = getRandomAlign();
             }
         };
 
-
         function getRandomSize() {
-            return (Math.random() * 90 ) + 50 ;
+            return (Math.random() * 90) + 50 ;
         }
 
-         function getRandomColor() {
+        function getRandomColor() {
             return colors[Math.floor(Math.random() * colors.length)];
         }
 
         function getRandomAlign() {
             return align[Math.floor(Math.random() * align.length)];
         }
-
-
     });
 })();

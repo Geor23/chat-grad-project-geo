@@ -38,12 +38,32 @@ describe("server", function() {
                 find: sinon.stub(),
                 findOne: sinon.stub(),
                 insertOne: sinon.spy()
+            },
+            messages: {
+                find: sinon.stub(),
+                count: sinon.stub(),
+                findOne: sinon.stub(),
+                insertOne: sinon.spy()
+            },
+            conversations: {
+                find: sinon.stub(),
+                findOne: sinon.stub(),
+                insertOne: sinon.spy()
+            },
+            lastopened: {
+                find: sinon.stub(),
+                findOne: sinon.stub(),
+                insertOne: sinon.spy()
             }
+
         };
         db = {
             collection: sinon.stub()
         };
         db.collection.withArgs("users").returns(dbCollections.users);
+        db.collection.withArgs("messages").returns(dbCollections.messages);
+        db.collection.withArgs("conversations").returns(dbCollections.conversations);
+        db.collection.withArgs("lastopened").returns(dbCollections.lastopened);
 
         githubAuthoriser = {
             authorise: function() {},
@@ -237,12 +257,12 @@ describe("server", function() {
                 request({url: requestUrl, jar: cookieJar}, function(error, response, body) {
                     assert.deepEqual(JSON.parse(body), [
                         {
-                            id: "bob",
+                            _id: "bob",
                             name: "Bob Bilson",
                             avatarUrl: "http://avatar.url.com/u=test"
                         },
                         {
-                            id: "charlie",
+                            _id: "charlie",
                             name: "Charlie Colinson",
                             avatarUrl: "http://avatar.url.com/u=charlie_colinson"
                         }
@@ -256,6 +276,149 @@ describe("server", function() {
                 allUsers.toArray.callsArgWith(0, {err: "Database failure"}, null);
 
                 request({url: requestUrl, jar: cookieJar}, function(error, response) {
+                    assert.equal(response.statusCode, 500);
+                    done();
+                });
+            });
+        });
+    });
+    describe("GET /api/conv", function() {
+        var requestUrl = baseUrl + "/api/conv";
+        var allConv;
+        beforeEach(function() {
+            allConv = {
+                toArray: sinon.stub()
+            };
+            dbCollections.conversations.find.returns(allConv);
+        });
+        it("responds with a body that is a JSON representation of the conversations", function(done) {
+            authenticateUser(testUser, testToken, function() {
+                allConv.toArray.callsArgWith(0, null, []);
+
+                request({url: requestUrl, query: {user: "bob"}}, function(error, response, body) {
+                    assert.deepEqual(JSON.parse(body), []);
+                    done();
+                });
+            });
+        });
+        it("responds with status code 500 if database error", function(done) {
+            authenticateUser(testUser, testToken, function() {
+                allConv.toArray.callsArgWith(0, {err: "Database failure"}, null);
+
+                request({url: requestUrl, jar: cookieJar}, function(error, response) {
+                    assert.equal(response.statusCode, 500);
+                    done();
+                });
+            });
+        });
+    });
+    describe("POST /api/conv", function() {
+        var requestUrl = baseUrl + "/api/conv";
+        it("responds with a body that is a JSON representation of the conversations", function(done) {
+            var d = new Date();
+            var q = {users: ["bob"], name: "name", last_msg: d};
+            var h = {Accept: "application/json"};
+            authenticateUser(testUser, testToken, function() {
+                request.post({url: requestUrl, headers: h, body: JSON.stringify(q)}, function(error, response, body) {
+                    console.log(error);
+                    assert(dbCollections.conversations.insertOne.calledOnce);
+                    assert.deepEqual(dbCollections.conversations.insertOne.firstCall.args[0], {
+                        users: ["bob"],
+                        name: "name",
+                        last_msg: d
+                    });
+                    done();
+                });
+            });
+        });
+        it("responds with status code 500 if database error", function(done) {
+            authenticateUser(testUser, testToken, function() {
+                dbCollections.conversations.insertOne.callsArgWith(0, {err: "Database failure"}, null);
+                request({url: requestUrl, jar: cookieJar}, function(error, response) {
+                    assert.equal(response.statusCode, 500);
+                    done();
+                });
+            });
+        });
+    });
+    describe("GET /api/messages", function() {
+        var requestUrl = baseUrl + "/api/messages";
+        var allMsg;
+        beforeEach(function() {
+            allMsg = {
+                toArray: sinon.stub()
+            };
+            dbCollections.messages.find.returns(allMsg);
+        });
+        it("responds with a body that is a JSON representation of the conversations", function(done) {
+            authenticateUser(testUser, testToken, function() {
+                allMsg.toArray.callsArgWith(0, null, []);
+
+                request({url: requestUrl, query: {conv_id: "0"}}, function(error, response, body) {
+                    assert.deepEqual(JSON.parse(body), []);
+                    done();
+                });
+            });
+        });
+        it("responds with status code 500 if database error", function(done) {
+            authenticateUser(testUser, testToken, function() {
+                allMsg.toArray.callsArgWith(0, {err: "Database failure"}, null);
+
+                request({url: requestUrl, query: {conv_id: "0"}}, function(error, response) {
+                    assert.equal(response.statusCode, 500);
+                    done();
+                });
+            });
+        });
+    });
+    describe("GET /api/messagescount", function() {
+        var requestUrl = baseUrl + "/api/messagescount";
+        /*it("responds with the number of messages", function(done) {
+            var d = new Date();
+            dbCollections.messages.count.callsArgWith(1, null, {conv_id: "0", time: d});
+            console.log("got here");
+            request({url: requestUrl, query: {conv_id: "0", time: d}}, function(error, response) {
+                console.log(response.data);
+                assert.deepEqual(response.data, 0);
+                done();
+            });
+        });*/
+        it("responds with status code 500 if database error", function(done) {
+            var d = new Date();
+            authenticateUser(testUser, testToken, function() {
+                dbCollections.messages.count.callsArgWith(1, {err: "Database failure"}, null);
+
+                request({url: requestUrl, query: {conv_id: "0", time: d}}, function(error, response) {
+                    assert.equal(response.statusCode, 500);
+                    done();
+                });
+            });
+        });
+    });
+    describe("GET /api/lastopened", function() {
+        var requestUrl = baseUrl + "/api/lastopened";
+        var alllastopened;
+        beforeEach(function() {
+            alllastopened = {
+                toArray: sinon.stub()
+            };
+            dbCollections.lastopened.find.returns(alllastopened);
+        });
+        it("responds with a body that is a JSON representation of the conversations", function(done) {
+            authenticateUser(testUser, testToken, function() {
+                alllastopened.toArray.callsArgWith(0, null, []);
+
+                request({url: requestUrl, query: {user: "bob"}}, function(error, response, body) {
+                    assert.deepEqual(JSON.parse(body), []);
+                    done();
+                });
+            });
+        });
+        it("responds with status code 500 if database error", function(done) {
+            authenticateUser(testUser, testToken, function() {
+                alllastopened.toArray.callsArgWith(0, {err: "Database failure"}, null);
+
+                request({url: requestUrl, query: {user: "bob"}}, function(error, response) {
                     assert.equal(response.statusCode, 500);
                     done();
                 });
