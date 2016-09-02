@@ -74,8 +74,6 @@ module.exports = function(port, db, githubAuthoriser) {
 
 
     app.post("/api/conv/rem/users", function(req, res) {
-
-
         lastopened.deleteOne(
             { $and: [
                 {user : req.body.user}, 
@@ -93,16 +91,23 @@ module.exports = function(port, db, githubAuthoriser) {
     });
 
     app.post("/api/conv/add/users", function(req, res) {
-        console.log("addding");
         conversations.updateOne(
             { _id: ObjectId(req.body.conv_id) },
             { $pushAll: {users: req.body.users} }
         );
-        conversations.find({ _id: ObjectId(req.body.conv_id) }).toArray(function(err, docs) { console.log(docs);});
-
     });
 
+    app.post("/api/conv/name", function(req, res) {
+        conversations.updateOne(
+            { _id: ObjectId(req.body.conv_id) },
+            { $set: { name : req.body.name } } 
+        );
+        res.sendStatus(200);
 
+        conversations.find({ _id: req.body.conv_id }).toArray(function(err, docs) {
+            console.log(docs);
+        });
+    });
 
     // update the last time the conversation was opened
     app.post("/api/lastopened", function(req, res) {

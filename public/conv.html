@@ -15,7 +15,7 @@
               <a ng-click="addUserToConv(user);">{{user.name}}</a>
           </li>
         </ul>
-        <button type="button" ng-click="addUsersToConversation()">Add</button>
+        <button type="button" ng-click="addUsersToConversation(); showUsers=false;">Add</button>
     </div>
     <form class="send-msg" ng-submit="sendMessage(newMessage)">
         <input style="width: 400px" type="text" ng-model="newMessage"></input>

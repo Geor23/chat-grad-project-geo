@@ -39,7 +39,6 @@
         };
 
          $scope.addUsersToConversation = function() {
-            console.log("addding");
             var data = {
                  conv_id: $scope.conv._id, 
                  users: $scope.inputno 
