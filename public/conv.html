@@ -1,5 +1,11 @@
 <div ng-show="showConversation" class="start-conv-container-open">
-    <div class="users-conv"><p>{{conv.name}}</p></div>
+    <form class="users-conv">
+        <input ng-show="edittingName" ng-model="conv.name"></input>
+        <p ng-hide="edittingName">{{conv.name}}</p>
+
+        <button type="button" ng-hide="edittingName" ng-click="edittingName=true">Edit conversation name</button>
+        <button type="submit" ng-show="edittingName" ng-click="updateNameConv(conv.name);edittingName=false;">Update conversation name</button>
+    </form>
 
     <div class="conv-container">
         <ul><li ng-repeat="msg in messages">
@@ -9,6 +15,8 @@
     <button type="button" ng-click="clearConversation()">Clear conversation</button>
     <button type="button" ng-click="leaveConversation()">Leave conversation</button>
     <button type="button" ng-click="showUsers=true">Add Users To Conversation</button>
+    
+
     <div ng-show="showUsers">
         <ul ng-init="inputno=[]">
           <li ng-repeat="user in users" ng-if="conv.users.indexOf(user._id)<0" ng-class="isAlreadyInConv(user) ? 'disabled' : 'enabled'">

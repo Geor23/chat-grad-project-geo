@@ -13,6 +13,7 @@
         $scope.convSize = [];
         $scope.convCol = [];
         $scope.aligs = [];
+        $scope.edittingName = false;
         var colors = ['rgba(65, 0, 0, 0.5)', 'rgba(241, 18, 18, 0.5)', 'rgba(237, 241, 18, 0.5)', 'rgba(104, 241, 18, 0.5)', 'rgba(47, 108, 8, 0.5)', 'rgba(40, 244, 112, 0.5)', 'rgba(40, 244, 210, 0.5)', 'rgba(5, 112, 94, 0.5)', 'rgba(34, 170, 204, 0.5)', 'rgba(34, 37, 204, 0.5)', 'rgba(5, 6, 101, 0.5)', 'rgba(107, 32, 238, 0.5)', 'rgba(43, 7, 104, 0.5)', 'rgba(104, 43, 7, 0.5)', 'rgba(20, 104, 7, 0.5)', 'rgba(7, 20, 104, 0.5)', 'rgba(96, 7, 104, 0.5)', 'rgba(218, 12, 237, 0.5)', 'rgba(222, 16, 133, 0.5)', 'rgba(222, 16, 58, 0.5)', 'rgba(147, 0, 29, 0.5)', 'rgba(216, 12, 16, 0.5)'];
         var align = ['flex-start', 'flex-end', 'center', 'baseline' , 'stretch' ]
 
@@ -38,7 +39,20 @@
             stopAndBackToHome();
         };
 
-         $scope.addUsersToConversation = function() {
+        $scope.updateNameConv = function() {
+
+            var data = {
+                 conv_id: $scope.conv._id, 
+                 name: $scope.conv.name 
+            };
+            $http.post("/api/conv/name", data).then(function(response){
+                console.log(response);
+                
+            });
+
+        };
+
+        $scope.addUsersToConversation = function() {
             var data = {
                  conv_id: $scope.conv._id, 
                  users: $scope.inputno 
