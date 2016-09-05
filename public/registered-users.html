@@ -4,8 +4,8 @@
       <div ng-class="!toggle ? 'bar2' : 'bar2-change'"></div>
       <div ng-class="!toggle ? 'bar3' : 'bar3-change'"></div>
     </div>
-    <h2 ng-show="toggle" class="reg">REGISTERED USERS</h2>
-    <ul ng-show="toggle">
+    <h5 ng-show="toggle" class="reg">REGISTERED USERS</h5>
+    <ul ng-show="toggle" class="ireg">
         <li ng-repeat="user in users">
             <div class="margin"><span class="users">{{user.name}}</span></div>
         </li>

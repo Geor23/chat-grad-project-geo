@@ -16,7 +16,7 @@ ul {
     width: 29px;
     margin-top: -12px;
     margin-left: 3px;
-    position: relative;
+    position: fixed;
 }
 
 .bar1, .bar2, .bar3 {
@@ -25,6 +25,7 @@ ul {
     background-color: black;
     margin: 4px 2px 4px 2px;
     transition: 0.4s;
+    transform: rotate(45deg) translate(4px, -2px) ;
 }
 
 /* Rotate first bar */
@@ -34,8 +35,8 @@ ul {
     background-color: white;
     margin: 4px 2px 4px 2px;
     transition: 0.4s;
-    -webkit-transform: rotate(-45deg) translate(-9px, 6px) ;
-    transform: rotate(-45deg) translate(-9px, 6px) ;
+    -webkit-transform: rotate(-45deg) translate(-4px, 2px) ;
+    transform: rotate(-45deg) translate(-4px, 2px) ;
 }
 
 /* Fade out the second bar */
@@ -64,9 +65,8 @@ ul {
 
 .menu-container-in {
     background-color: white;
-    height: 140px;
-    top: 50%;
-    margin-top: -70px;
+    top: 300px;
+    bottom: 300px;
     overflow: hidden;
     width: 40px;
     left: 0px;
@@ -80,10 +80,12 @@ ul {
 
 .menu-container-out {
     background-color: #2E2E2E;
-    height: 100%;
-    overflow: auto;
-    width: 300px;
-    left: 0px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 200px;
+    left: 50px;
+    top: 50px;
+    bottom: 50px;
     transition: 1s;
     position: absolute;
     border-radius: 5px;
@@ -192,27 +194,33 @@ ul {
 
 .reg {
     letter-spacing: 2px;
-    padding: 40px;
-    margin: 40px;
+    margin: 10px;
+    margin-left: 30px;
+    padding-bottom: 20px;
     border-bottom: 5px double black;
     text-align: center;
     color: white;
 }
 
+.ireg {
+    margin-left: 30px;
+}
+
 .margin {
-    padding: 20px;
-    margin: 20px;
-    border-bottom: 2px dotted black;
+    padding: 5px;
+    margin: 5px;
     text-align: center;
 }
 
 .users {
     color: white;
-    border-bottom: 3px solid transparent;
+    border-bottom: 2px solid transparent;
+    padding-bottom: 2px;
 }
 
 .users:hover {
-    border-bottom: 3px solid white;
+    border-bottom: 2px solid white;
+    padding-bottom: 2px;
     cursor: pointer; 
 }
 
