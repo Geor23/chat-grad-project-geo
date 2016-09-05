@@ -58,15 +58,18 @@ module.exports = function(port, db, githubAuthoriser) {
             name: req.body.name,
             last_msg: new Date(req.body.time)
         }, function(err, c) {
-            res.json(c);
-            req.body.users.forEach(function(user) {
-                lastopened.insertOne({
-                    user: user,
-                    conv_id: c.insertedId,
-                    last_opened: new Date(req.body.time)
-                }, function(err, docs) {
+            if (err) {
+                res.sendStatus(401);
+            } else {
+                res.json(c);
+                req.body.users.forEach(function(user) {
+                    lastopened.insertOne({
+                        user: user,
+                        conv_id: c.insertedId,
+                        last_opened: new Date(req.body.time)
+                    });
                 });
-            });
+            }
         });
     });
 
@@ -79,33 +82,39 @@ module.exports = function(port, db, githubAuthoriser) {
             if (err) {
                 res.sendStatus(401);
             } else {
+                conversations.updateOne(
+                    {_id: ObjectId(req.body.conv_id)},
+                    {$pull: {users: req.body.user}}
+                );
                 res.sendStatus(200);
             }
         });
-
-        conversations.updateOne(
-            {_id: ObjectId(req.body.conv_id)},
-            {$pull: {users: req.body.user}}
-        );
     });
 
     app.post("/api/conv/add/users", function(req, res) {
         conversations.updateOne(
             {_id: ObjectId(req.body.conv_id)},
-            {$pushAll: {users: req.body.users}}
-        );
+            {$pushAll: {users: req.body.users}},
+            function(err, docs) {
+                if (!err) {
+                    res.sendStatus(200);
+                } else {
+                    res.sendStatus(500);
+                }
+            });
     });
 
     app.post("/api/conv/name", function(req, res) {
         conversations.updateOne(
             {_id: ObjectId(req.body.conv_id)},
-            {$set: {name : req.body.name}}
-        );
-        res.sendStatus(200);
-
-        conversations.find({_id: req.body.conv_id}).toArray(function(err, docs) {
-            console.log(docs);
-        });
+            {$set: {name : req.body.name}},
+            function(err, docs) {
+                if (!err) {
+                    res.sendStatus(200);
+                } else {
+                    res.sendStatus(500);
+                }
+            });
     });
 
     // update the last time the conversation was opened
@@ -115,9 +124,14 @@ module.exports = function(port, db, githubAuthoriser) {
                 {user : req.body.user},
                 {conv_id : ObjectId(req.body.conv_id)}
             ]} ,
-            {$set: {"last_opened" : new Date(req.body.time)}}
-        );
-        res.sendStatus(200);
+            {$set: {"last_opened" : new Date(req.body.time)}},
+            function(err, docs) {
+                if (!err) {
+                    res.sendStatus(200);
+                } else {
+                    res.sendStatus(500);
+                }
+            });
     });
 
     // get all the conversations that a specific user belongs to
@@ -149,9 +163,14 @@ module.exports = function(port, db, githubAuthoriser) {
             from: req.body.from,
             messageText: req.body.messageText,
             time: new Date(req.body.time)
+        }, function(err) {
+            if (err) {
+                res.sendStatus(500);
+            } else {
+                updateLastMsg(new Date(req.body.time), req.body.conv_id);
+                res.sendStatus(200);
+            }
         });
-        updateLastMsg(new Date(req.body.time), req.body.conv_id);
-        res.sendStatus(200);
     });
 
     // get all messages from a conversation

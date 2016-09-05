@@ -43,17 +43,22 @@ describe("server", function() {
                 find: sinon.stub(),
                 count: sinon.stub(),
                 findOne: sinon.stub(),
-                insertOne: sinon.spy()
+                insertOne: sinon.stub(),
+                deleteMany: sinon.stub()
             },
             conversations: {
                 find: sinon.stub(),
                 findOne: sinon.stub(),
-                insertOne: sinon.spy()
+                insertOne: sinon.stub(),
+                update: sinon.stub(),
+                updateOne: sinon.stub()
             },
             lastopened: {
                 find: sinon.stub(),
                 findOne: sinon.stub(),
-                insertOne: sinon.spy()
+                insertOne: sinon.spy(),
+                deleteOne: sinon.stub(),
+                updateOne: sinon.stub()
             }
 
         };
@@ -315,29 +320,190 @@ describe("server", function() {
     describe("POST /api/conv", function() {
         var requestUrl = baseUrl + "/api/conv";
         it("responds with a body that is a JSON representation of the conversations", function(done) {
+
             var d = new Date();
-            var q = {users: ["bob"], name: "name", last_msg: d};
+            var q = {users: ["bob"], name: "name", time: d};
             var h = {Accept: "application/json"};
-            authenticateUser(testUser, testToken, function() {
-                request.post({url: requestUrl, headers: h, body: JSON.stringify(q)}, function(error, response, body) {
-                    console.log(error);
-                    assert(dbCollections.conversations.insertOne.calledOnce);
-                    assert.deepEqual(dbCollections.conversations.insertOne.firstCall.args[0], {
-                        users: ["bob"],
-                        name: "name",
-                        last_msg: d
-                    });
-                    done();
+
+            dbCollections.conversations.insertOne.callsArgWith(1, null, q);
+            request.post({url: requestUrl, headers: h, form: q}, function(err, res) {
+                assert(dbCollections.conversations.insertOne.calledOnce);
+                assert.deepEqual(dbCollections.conversations.insertOne.firstCall.args[0], {
+                    users: ["bob"],
+                    name: "name",
+                    last_msg: d
                 });
+                assert(dbCollections.lastopened.insertOne.calledOnce);
+                done();
             });
         });
         it("responds with status code 500 if database error", function(done) {
-            authenticateUser(testUser, testToken, function() {
-                dbCollections.conversations.insertOne.callsArgWith(0, {err: "Database failure"}, null);
-                request({url: requestUrl, jar: cookieJar}, function(error, response) {
-                    assert.equal(response.statusCode, 500);
-                    done();
+            var d = new Date();
+            var q = {users: ["bob"], name: "name", time: d};
+            var h = {Accept: "application/json"};
+
+            dbCollections.conversations.insertOne.callsArgWith(1, {err: "Database failure"}, null);
+            request.post({url: requestUrl, headers: h, form: q}, function(error, response) {
+                assert.equal(response.statusCode, 401);
+                done();
+            });
+        });
+    });
+    describe("POST /api/messages/clear", function() {
+        var requestUrl = baseUrl + "/api/messages/clear";
+        it("responds with a body that is a JSON representation of the conversations", function(done) {
+            var q = {conv_id: 0};
+            var h = {Accept: "application/json"};
+
+            dbCollections.messages.deleteMany.callsArgWith(1, null, q);
+            request.post({url: requestUrl, headers: h, form: q}, function(err, res) {
+                assert(dbCollections.messages.deleteMany.calledOnce);
+                assert.deepEqual(dbCollections.messages.deleteMany.firstCall.args[0], {
+                    conv_id: "0"
                 });
+                done();
+            });
+        });
+        it("responds with status code 500 if database error", function(done) {
+            var d = new Date();
+            var q = {users: ["bob"], name: "name", time: d};
+            var h = {Accept: "application/json"};
+
+            dbCollections.messages.deleteMany.callsArgWith(1, {err: "Database failure"}, null);
+            request.post({url: requestUrl, headers: h, form: q}, function(error, response) {
+                assert.equal(response.statusCode, 401);
+                done();
+            });
+        });
+    });
+    describe("POST /api/messages", function() {
+        var requestUrl = baseUrl + "/api/messages";
+        it("responds with a body that is a JSON representation of the conversations", function(done) {
+            var d = new Date();
+            var q = {conv_id: "000000000000", from: "bob", messageText: "hello", time: d};
+            var h = {Accept: "application/json"};
+
+            dbCollections.messages.insertOne.callsArgWith(1, null, q);
+            request.post({url: requestUrl, headers: h, form: q}, function(err, res) {
+                assert(dbCollections.messages.insertOne.calledOnce);
+                assert.deepEqual(dbCollections.messages.insertOne.firstCall.args[0], {
+                    conv_id: "000000000000",
+                    from: "bob",
+                    messageText: "hello",
+                    time: d
+                });
+                assert(dbCollections.conversations.update.calledOnce);
+                done();
+            });
+        });
+        it("responds with status code 500 if database error", function(done) {
+            var d = new Date();
+            var q = {conv_id: "000000000000", from: "bob", messageText: "hello", time: d};
+            var h = {Accept: "application/json"};
+
+            dbCollections.messages.insertOne.callsArgWith(1, {err: "Database failure"}, null);
+            request.post({url: requestUrl, headers: h, form: q}, function(error, response) {
+                assert.equal(response.statusCode, 500);
+                done();
+            });
+        });
+    });
+    describe("POST /api/lastopened", function() {
+        var requestUrl = baseUrl + "/api/lastopened";
+        it("responds with a body that is a JSON representation of the conversations", function(done) {
+            var d = new Date();
+            var q = {conv_id: "000000000000", user: "bob", time: d};
+            var h = {Accept: "application/json"};
+
+            dbCollections.lastopened.updateOne.callsArgWith(2, null, q);
+            request.post({url: requestUrl, headers: h, form: q}, function(err, res) {
+                assert(dbCollections.lastopened.updateOne.calledOnce);
+                assert.equal(res.statusCode, 200);
+                done();
+            });
+        });
+        it("responds with status code 500 if database error", function(done) {
+            var d = new Date();
+            var q = {conv_id: "000000000000", user: "bob", time: d};
+            var h = {Accept: "application/json"};
+
+            dbCollections.lastopened.updateOne.callsArgWith(2, {err: "Database failure"}, null);
+            request.post({url: requestUrl, headers: h, form: q}, function(error, response) {
+                assert.equal(response.statusCode, 500);
+                done();
+            });
+        });
+    });
+    describe("POST /api/conv/name", function() {
+        var requestUrl = baseUrl + "/api/conv/name";
+        it("responds with a body that is a JSON representation of the conversations", function(done) {
+            var q = {conv_id: "000000000000", name: "newname"};
+            var h = {Accept: "application/json"};
+
+            dbCollections.conversations.updateOne.callsArgWith(2, null, q);
+            request.post({url: requestUrl, headers: h, form: q}, function(err, res) {
+                assert(dbCollections.conversations.updateOne.calledOnce);
+                assert.equal(res.statusCode, 200);
+                done();
+            });
+        });
+        it("responds with status code 500 if database error", function(done) {
+            var q = {conv_id: "000000000000", name: "newname"};
+            var h = {Accept: "application/json"};
+
+            dbCollections.conversations.updateOne.callsArgWith(2, {err: "Database failure"}, null);
+            request.post({url: requestUrl, headers: h, form: q}, function(error, response) {
+                assert.equal(response.statusCode, 500);
+                done();
+            });
+        });
+    });
+    describe("POST /api/conv/add/users", function() {
+        var requestUrl = baseUrl + "/api/conv/add/users";
+        it("responds with a body that is a JSON representation of the conversations", function(done) {
+            var q = {conv_id: "000000000000", users: ["bob"]};
+            var h = {Accept: "application/json"};
+
+            dbCollections.conversations.updateOne.callsArgWith(2, null, q);
+            request.post({url: requestUrl, headers: h, form: q}, function(err, res) {
+                assert(dbCollections.conversations.updateOne.calledOnce);
+                assert.equal(res.statusCode, 200);
+                done();
+            });
+        });
+        it("responds with status code 500 if database error", function(done) {
+            var q = {conv_id: "000000000000", name: "newname"};
+            var h = {Accept: "application/json"};
+
+            dbCollections.conversations.updateOne.callsArgWith(2, {err: "Database failure"}, null);
+            request.post({url: requestUrl, headers: h, form: q}, function(error, response) {
+                assert.equal(response.statusCode, 500);
+                done();
+            });
+        });
+    });
+    describe("POST /api/conv/rem/users", function() {
+        var requestUrl = baseUrl + "/api/conv/rem/users";
+        it("responds with a body that is a JSON representation of the conversations", function(done) {
+            var q = {conv_id: "000000000000", users: ["bob"]};
+            var h = {Accept: "application/json"};
+
+            dbCollections.lastopened.deleteOne.callsArgWith(1, null, q);
+            request.post({url: requestUrl, headers: h, form: q}, function(err, res) {
+                assert(dbCollections.lastopened.deleteOne.calledOnce);
+                assert(dbCollections.conversations.updateOne.calledOnce);
+                assert.equal(res.statusCode, 200);
+                done();
+            });
+        });
+        it("responds with status code 500 if database error", function(done) {
+            var q = {conv_id: "000000000000", name: "newname"};
+            var h = {Accept: "application/json"};
+
+            dbCollections.lastopened.deleteOne.callsArgWith(1, {err: "Database failure"}, null);
+            request.post({url: requestUrl, headers: h, form: q}, function(error, response) {
+                assert.equal(response.statusCode, 401);
+                done();
             });
         });
     });
@@ -373,16 +539,14 @@ describe("server", function() {
     });
     describe("GET /api/messagescount", function() {
         var requestUrl = baseUrl + "/api/messagescount";
-        /*it("responds with the number of messages", function(done) {
+        it("responds with the number of messages", function(done) {
             var d = new Date();
             dbCollections.messages.count.callsArgWith(1, null, {conv_id: "0", time: d});
-            console.log("got here");
-            request({url: requestUrl, query: {conv_id: "0", time: d}}, function(error, response) {
-                console.log(response.data);
-                assert.deepEqual(response.data, 0);
+            request({url: requestUrl, query: {conv_id: "0", time: d}}, function(error, response, body) {
+                assert(dbCollections.messages.count.calledOnce);
                 done();
             });
-        });*/
+        });
         it("responds with status code 500 if database error", function(done) {
             var d = new Date();
             authenticateUser(testUser, testToken, function() {
