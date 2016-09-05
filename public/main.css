@@ -1,6 +1,7 @@
 body {
     margin: 0px;
-    background-image: url("bck1.jpg");
+    background-color: white;
+    
 }
 
 ul {
@@ -11,23 +12,27 @@ ul {
 .container {
     display: inline-block;
     cursor: pointer;
-    margin: 5px;
+    top: 50%;
+    width: 29px;
+    margin-top: -12px;
+    margin-left: 3px;
+    position: relative;
 }
 
 .bar1, .bar2, .bar3 {
-    width: 35px;
-    height: 5px;
+    width: 25px;
+    height: 3px;
     background-color: black;
-    margin: 6px;
+    margin: 4px 2px 4px 2px;
     transition: 0.4s;
 }
 
 /* Rotate first bar */
 .bar1-change{
-    width: 35px;
-    height: 5px;
+    width: 25px;
+    height: 3px;
     background-color: white;
-    margin: 6px;
+    margin: 4px 2px 4px 2px;
     transition: 0.4s;
     -webkit-transform: rotate(-45deg) translate(-9px, 6px) ;
     transform: rotate(-45deg) translate(-9px, 6px) ;
@@ -35,18 +40,18 @@ ul {
 
 /* Fade out the second bar */
 .bar2-change{
-    width: 35px;
-    height: 5px;
+    width: 25px;
+    height: 3px;
     transition: 0.4s;
     opacity: 0;
 }
 
 /* Rotate last bar */
 .bar3-change{
-    width: 35px;
-    height: 5px;
+    width: 25px;
+    height: 3px;
     background-color: white;
-    margin: 6px;
+    margin: 4px 2px 4px 2px;
     transition: 0.4s;
     -webkit-transform: rotate(45deg) translate(-8px, -8px) ;
     transform: rotate(45deg) translate(-8px, -8px) ;
@@ -59,16 +64,18 @@ ul {
 
 .menu-container-in {
     background-color: white;
-    height: 100%;
-    overflow: auto;
-    width: 60px;
+    height: 140px;
+    top: 50%;
+    margin-top: -70px;
+    overflow: hidden;
+    width: 40px;
     left: 0px;
     position: absolute;
     transition: 1s;
-    border-radius: 5px;
-    border-color: black;
-    border-width: 10px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
     opacity: 0.7;
+    z-index:100;
 }
 
 .menu-container-out {
@@ -83,6 +90,7 @@ ul {
     border-color: black;
     border-width: 10px; 
     opacity: 0.8;
+    z-index:100;
 }
 
 .white-writing {
@@ -154,6 +162,32 @@ ul {
 .start-conv:hover {
     border: 5px solid black;
     cursor: pointer;
+}
+
+.cont {
+    position: absolute;
+    right: 50px;
+    left: 50px;
+    top: 50px;
+    bottom: 50px;
+    background-color: green;
+    border: 2px solid black;
+    border-radius: 0.4%;
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+    z-index: 10;
+}
+
+.cont2 {
+    position: absolute;
+    right: 50px;
+    left: 50px;
+    top: 50px;
+    bottom: 50px;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 0.4%;
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+    z-index: 20;
 }
 
 .reg {
