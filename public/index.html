@@ -81,7 +81,7 @@
                             </md-tab>
 
                             <md-tab ng-if="showConversation" label="{{conv.name}}">
-                                <md-content class="md-padding flex-col">
+                                <md-content class="flex-col">
                                         <md-menu-bar style="padding: 0px">
                                                 <md-button style="padding: 0px; margin: 0px" ng-click="clearConversation()">
                                                     <md-icon>delete_sweep</md-icon>
@@ -98,7 +98,6 @@
                                                 <md-button style="padding: 0px; margin: 0px" ng-click="leaveConversation()">
                                                     <md-icon>keyboard_tab</md-icon>
                                                 </md-button>
-
                                         </md-menu-bar>
 
                                         <form ng-show="edittingName">
@@ -108,13 +107,17 @@
                                             </md-button>
                                         </form>
 
-                                        <ul>
-                                            <li ng-repeat="msg in messages">
-                                                    From: {{msg.from}}, To: {{msg.to}}, Message: {{msg.messageText}}, Time: {{msg.time}}
-                                            </li>
-                                        </ul>
-
-                                        
+                                        <md-content class="conv-users-container" style="background-color:white">
+                                            <md-list flex>
+                                                <md-list-item class="md-2-line" ng-repeat="msg in messages">
+                                                    <img ng-src="{{user.avatarUrl}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />
+                                                    <div class="md-list-item-text" layout="column">
+                                                        <p>{{msg.from}}: Time: {{msg.time}}</p>
+                                                        <h5>{{msg.messageText}}</h5>
+                                                    </div>
+                                                </md-list-item>
+                                            </md-list>
+                                        </md-content>
 
                                         <div ng-show="showUsers">
                                             <ul ng-init="inputno=[]">
@@ -124,12 +127,14 @@
                                             </ul>
                                             <button type="button" ng-click="addUsersToConversation(); showUsers=false;">Add</button>
                                         </div>
+
                                         <form class="send-msg" ng-submit="sendMessage(newMessage)">
-                                            <input style="width: 400px" type="text" ng-model="newMessage"></input>
+                                            <input style="width: 200px" type="text" ng-model="newMessage"></input>
                                             <md-button type="submit">
                                                 <md-icon>send</md-icon>
                                             </md-button>
                                         </form>
+
                                 </md-content>
                             </md-tab>
 
