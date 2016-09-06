@@ -62,6 +62,10 @@
         $scope.stopAndBackToHome = function() {
             $scope.showConversation = false;
             $scope.conv = undefined;
+            cancelInt();
+        };
+
+        function cancelInt() {
             $interval.cancel(int);
             int = undefined;
         }
