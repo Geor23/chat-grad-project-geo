@@ -13,6 +13,23 @@ ul {
 .logged-in-as {
      right: 10px; 
      position: absolute;
+     text-transform: uppercase;
+     letter-spacing: 2px;
+     color: white;
+     font-weight: bold;
+     cursor: pointer;
+     transition: .7s;
+}
+
+.logged-in-as:hover {
+     right: 10px; 
+     position: absolute;
+     text-transform: uppercase;
+     letter-spacing: 4px;
+     color: black;
+     font-weight: bold;
+     cursor: pointer;
+     transition: .7s;
 }
 
 .white-writing {
@@ -92,7 +109,7 @@ ul {
     left: 50px;
     top: 50px;
     bottom: 50px;
-    background-color: green;
+    background-color: rgba(0, 128, 0, 0.42);
     border: 2px solid black;
     border-radius: 0.4%;
     box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
@@ -351,7 +368,7 @@ ul {
     top: 50%;
     width: 29px;
     margin-top: -12px;
-    margin-left: 3px;
+    margin-left: 6px;
     position: fixed;
 }
 
