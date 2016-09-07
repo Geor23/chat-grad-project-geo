@@ -74,7 +74,7 @@
                                         </div>
                                     </md-input-container>
 
-                                    <div class="chat-now-btn" ng-click="startConversation(inputConvName); selectedIndex=1;">CHAT NOW</div>
+                                    <button class="chat-now-btn" ng-click="startConversation(inputConvName); selectedIndex=1;" ng-disabled="inputConvName===''">CHAT NOW</button>
 
                                 </md-content>
                             </md-tab>
