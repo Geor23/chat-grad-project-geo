@@ -186,18 +186,25 @@ ul {
 .bubble-container {
     position: relative;
     display: flex;
-    flex-flow: row; 
     height: 80%;
     width: 35%;
-    flex-wrap:  wrap-reverse;
-    justify-content: space-around;
-    overflow: auto;
     border-bottom: 3px solid black;
     border-right: 3px solid black;
     border-left: 3px solid black;
     padding: 10px;
     margin: 10px;
     border-radius: 10%;
+    overflow: auto;
+}
+
+.bubble-inside {
+     display: flex;
+     flex-flow: row;
+     
+     min-height: min-content;
+     max-height: 100%;
+     flex-wrap:  wrap-reverse;
+     justify-content: space-around;
 }
 
 .non-bubble-container {
