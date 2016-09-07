@@ -73,6 +73,7 @@
         $scope.openConversation = function(conversation) {
             $scope.conv = conversation;
             $scope.showConversation = true;
+            $scope.selectedIndex=1;
             int = $interval($scope.getMessages, 300);
         };
 

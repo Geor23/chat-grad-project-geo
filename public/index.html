@@ -50,7 +50,7 @@
                     <a ng-show="!loggedIn" href="{{loginUri}}" style="text-align: center; top: 50%; left:50%; position: absolute">Log in</a>
                     
                     <md-content class="non-bubble-container" ng-show="loggedIn">
-                        <md-tabs md-dynamic-height md-border-bottom md-autoselect>
+                        <md-tabs md-dynamic-height md-border-bottom md-autoselect md-selected="selectedIndex">
 
                             <md-tab label="New Conversation">
                                 <md-content class="md-padding flex-col">
@@ -74,7 +74,7 @@
                                         </div>
                                     </md-input-container>
 
-                                    <div class="chat-now-btn" ng-click="startConversation(inputConvName)">CHAT NOW</div>
+                                    <div class="chat-now-btn" ng-click="startConversation(inputConvName); selectedIndex=1;">CHAT NOW</div>
 
                                 </md-content>
                             </md-tab>
@@ -150,7 +150,7 @@
 
                      <div ng-hide="!loggedIn" class="bubble-container">
                         <div ng-repeat="conv in conversations track by $index" ng-style="{'align-self': aligs[$index]}">
-                            <div class="bubble" ng-style="{'width': convSize[$index] + 'px', 'height': convSize[$index] + 'px', 'background-color': convCol[$index]}" ng-click="openConversation(conv)"><div ng-show="conv.unread!==undefined&&conv.unread!==0" style="text-align: center" ng-style="{margin: convSize[$index]/3 + 'px'}">{{conv.unread}}</div><div id="popup">{{conv.name}}</div></div>
+                            <div class="bubble" ng-style="{'width': convSize[$index] + 'px', 'height': convSize[$index] + 'px', 'background-color': convCol[$index]}" ng-click="openConversation(conv);"><div ng-show="conv.unread!==undefined&&conv.unread!==0" style="text-align: center" ng-style="{margin: convSize[$index]/3 + 'px'}">{{conv.unread}}</div><div id="popup">{{conv.name}}</div></div>
                         </div>
                     </div>
 
