@@ -57,10 +57,10 @@
 
                                     <md-content class="conv-users-container">
                                         <md-list flex>
-                                            <md-list-item class="md-1-line" ng-repeat="user in users" ng-click="addUserToConv(user)"  ng-class="isAlreadyInConv(user) ? 'disabled' : 'enabled'">
-                                                <img ng-src="{{user.avatarUrl}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />
+                                            <md-list-item class="md-1-line" ng-repeat="usr in users" ng-click="addUserToConv(usr)"  ng-class="isAlreadyInConv(usr) ? 'disabled' : 'enabled'" ng-if="user._id!==usr._id">
+                                                <img ng-src="{{usr.avatarUrl}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />
                                                 <div class="md-list-item-text" layout="column">
-                                                    <p>{{user.name}}</p>
+                                                    <p>{{usr.name}}</p>
                                                 </div>
                                             </md-list-item>
                                         </md-list>
