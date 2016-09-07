@@ -129,7 +129,7 @@
 
                                         <form class="send-msg" ng-submit="sendMessage(newMessage)">
                                             <input style="width: 200px" type="text" ng-model="newMessage"></input>
-                                            <md-button type="submit">
+                                            <md-button type="submit" ng-disabled="newMessage===''">
                                                 <md-icon>send</md-icon>
                                             </md-button>
                                         </form>

@@ -27,6 +27,6 @@
     </div>
     <form class="send-msg" ng-submit="sendMessage(newMessage)">
         <input style="width: 400px" type="text" ng-model="newMessage"></input>
-        <button type="submit">Send</button>
+        <button ng-disabled="newMessage===''" type="submit">Send</button>
     </form>
 </div>
