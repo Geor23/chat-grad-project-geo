@@ -37,7 +37,7 @@
             <div ng-include="'top-menu.html'"></div>
             <div ng-include="'registered-users.html'"></div>
 
-            <md-whiteframe class="md-whiteframe-9dp home-button-container">
+            <md-whiteframe ng-show="loggedIn" class="md-whiteframe-9dp home-button-container">
                 <div class="home-container preview-glyphs" ng-click="stopAndBackToHome()">
                     <md-icon md-font-icon="icon-home" style="color:black; font-size: 32px; height: 32px">home</md-icon>
                 </div>
@@ -45,11 +45,10 @@
 
 
             <md-whiteframe class="md-whiteframe-20dp cont2">
-                <a ng-show="!loggedIn" href="{{loginUri}}" style="text-align: center; top: 50%; left:50%; position: absolute">Log in</a>
-
 
                 <div class="content-container">
-
+                    <a ng-show="!loggedIn" href="{{loginUri}}" style="text-align: center; top: 50%; left:50%; position: absolute">Log in</a>
+                    
                     <md-content class="non-bubble-container" ng-show="loggedIn">
                         <md-tabs md-dynamic-height md-border-bottom>
 
@@ -140,9 +139,6 @@
 
                         </md-tabs>
                     </md-content>
-
-
-
 
 
                     <!-- <div ng-include="'start-conv.html'"></div> -->
