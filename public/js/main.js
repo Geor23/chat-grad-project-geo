@@ -73,7 +73,7 @@
         $scope.openConversation = function(conversation) {
             $scope.conv = conversation;
             $scope.showConversation = true;
-            $scope.selectedIndex=1;
+            changeTab();
             int = $interval($scope.getMessages, 300);
         };
 
@@ -98,7 +98,14 @@
             }, function(response) {
             });
             $scope.showConversation = true;
+            changeTab();
         };
+
+        function changeTab() {
+            $scope.selectedIndex=1;
+            $scope.inputConvName='';
+            $scope.inputno = [];
+        }
 
         $scope.sendMessage = function(msg) {
             var d = new Date();
