@@ -61,7 +61,8 @@ module.exports = function(port, db, githubAuthoriser) {
             if (err) {
                 res.sendStatus(401);
             } else {
-                res.json(c);
+                res.json(c.ops[0]);
+                console.log(c.ops);
                 req.body.users.forEach(function(user) {
                     lastopened.insertOne({
                         user: user,

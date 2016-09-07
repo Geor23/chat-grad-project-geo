@@ -71,9 +71,9 @@
         }
 
         $scope.openConversation = function(conversation) {
+            changeTab();
             $scope.conv = conversation;
             $scope.showConversation = true;
-            changeTab();
             int = $interval($scope.getMessages, 300);
         };
 
@@ -92,18 +92,21 @@
                 name: name,
                 time: d
             };
+            
             $http.post("/api/conv", data).then(function(response) {
                 $scope.conv = response.data;
+                console.log(JSON.stringify($scope.conv));
                 $scope.getMessages();
+                $scope.showConversation = true;
+                changeTab();
             }, function(response) {
             });
-            $scope.showConversation = true;
-            changeTab();
+            
         };
 
         function changeTab() {
-            $scope.selectedIndex=1;
-            $scope.inputConvName='';
+                        $scope.selectedIndex=1;
+$scope.inputConvName='';
             $scope.inputno = [];
         }
 
