@@ -105,8 +105,8 @@
         };
 
         function changeTab() {
-                        $scope.selectedIndex=1;
-$scope.inputConvName='';
+            $scope.selectedIndex=1;
+            $scope.inputConvName='';
             $scope.inputno = [];
         }
 
@@ -120,7 +120,6 @@ $scope.inputConvName='';
             };
             $http.post("/api/messages", data).then(function(response) {
                 $scope.getMessages();
-                $scope.newMessage = "";
             }, function(response) {
             });
         };
