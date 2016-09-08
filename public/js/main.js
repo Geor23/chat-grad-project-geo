@@ -1,7 +1,37 @@
 (function() {
     var app = angular.module("ChatApp", ["ngMaterial"]);
 
-    app.controller("ChatController", function($scope, $http, $interval) {
+    app.controller("ChatController", function($scope, $http, $interval, $mdDialog) {
+
+
+          $scope.customFullscreen = false;
+
+
+          $scope.showPrompt = function(ev) {
+            var confirm = $mdDialog.prompt()
+            .parent(angular.element(document.querySelector('#popupContainer')))
+              .clickOutsideToClose(true)
+              .title('How would you like to rename your chat?')
+              .placeholder('Chat name')
+              .ariaLabel('Chat name')
+              .initialValue($scope.conv.name)
+              .targetEvent(ev)
+              .ok('Okay!')
+              .cancel('Cancel');
+
+            $mdDialog.show(confirm).then(function(result) {
+                if (result !== $scope.conv.name){
+                    $scope.updateNameConv(result);
+                }
+            });
+          };
+
+
+
+
+
+
+
         /*
             DESIGN VARIABLES
         */
@@ -41,10 +71,11 @@
             $scope.stopAndBackToHome();
         };
 
-        $scope.updateNameConv = function() {
+        $scope.updateNameConv = function(newname) {
+            $scope.conv.name = newname;
             var data = {
                 conv_id: $scope.conv._id,
-                name: $scope.conv.name
+                name: newname
             };
             $http.post("/api/conv/name", data).then(function(response) {
             });

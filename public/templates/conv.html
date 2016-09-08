@@ -1,4 +1,4 @@
- <md-content class="flex-col" ng-init="showUsersInConv=false">
+ <md-content class="flex-col" ng-init="showUsersInConv=false" id="popupContainer">
     <md-menu-bar style="padding: 0px">
             <md-button style="padding: 0px; margin: 0px" ng-click="clearConversation()">
                 <md-icon>delete_sweep</md-icon>
@@ -8,7 +8,7 @@
                 <md-icon>group_add</md-icon>
             </md-button>
 
-            <md-button style="padding: 0px; margin: 0px" ng-click="edittingName=true">
+            <md-button style="padding: 0px; margin: 0px" ng-click="showPrompt($event)">
                 <md-icon>edit</md-icon>
             </md-button>
         
@@ -20,20 +20,13 @@
             </md-button>
     </md-menu-bar>
     <md-list flex ng-show="showUsersInConv">
-        <md-list-item class="md-1-line" ng-repeat="usr in conv.users">
+        <md-list-item class="md-1-line" ng-repeat="usr in conv.users track by $index">
             <img ng-src="{{getAvatarFromId(usr)}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />
             <div class="md-list-item-text" layout="column">
                 <p>{{getUserNameFromId(usr)}}</p>
             </div>
         </md-list-item>
     </md-list>
-
-    <form ng-show="edittingName">
-        <input ng-model="conv.name"></input>
-        <md-button type="submit" ng-click="updateNameConv(conv.name);edittingName=false;">
-            <md-icon>done</md-icon>
-        </md-button>
-    </form>
 
     <md-content class="conv-users-container" style="background-color:white">
         <md-list flex>
