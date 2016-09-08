@@ -37,7 +37,21 @@
             .cancel('Cancel');
 
             $mdDialog.show(confirm).then(function(result) {
-                $scope.clearConversation()();
+                $scope.clearConversation();
+            });
+        };
+
+        $scope.confirmLeaveConv = function(ev) {
+            var confirm = $mdDialog.confirm()
+            .parent(angular.element(document.querySelector('#popupContainer')))
+            .clickOutsideToClose(true)
+            .title('Are you sure you want to leave this conversation?')
+            .targetEvent(ev)
+            .ok('Confirm')
+            .cancel('Cancel');
+
+            $mdDialog.show(confirm).then(function(result) {
+                $scope.leaveConversation();
             });
         };
 
