@@ -1,10 +1,10 @@
  <md-content class="flex-col" ng-init="showUsersInConv=false" id="popupContainer">
     <md-menu-bar style="padding: 0px">
-            <md-button style="padding: 0px; margin: 0px" ng-click="clearConversation()">
+            <md-button style="padding: 0px; margin: 0px" ng-click="confirmClearConv()">
                 <md-icon>delete_sweep</md-icon>
             </md-button>
 
-            <md-button style="padding: 0px; margin: 0px" ng-click="showUsers=true">
+            <md-button style="padding: 0px; margin: 0px" ng-click="showPrerenderedDialog($event, '#add-users')">
                 <md-icon>group_add</md-icon>
             </md-button>
 
@@ -15,26 +15,26 @@
             <md-button style="padding: 0px; margin: 0px" ng-click="leaveConversation()">
                 <md-icon>keyboard_tab</md-icon>
             </md-button>
-            <md-button style="padding: 0px; margin: 0px" ng-click="showPrerenderedDialog($event)">
+            <md-button style="padding: 0px; margin: 0px" ng-click="showPrerenderedDialog($event, '#users-in-conv')">
                 <md-icon>group</md-icon>
             </md-button>
     </md-menu-bar>
 
     <div style="visibility: hidden">
-    <div class="md-dialog-container" id="users-in-conv">
-      <md-dialog layout-padding>
-        <md-list flex>
-            <h3>Users participating in this conversation:</h3>
-            <md-list-item class="md-1-line" ng-repeat="usr in conv.users track by $index">
-                <img ng-src="{{getAvatarFromId(usr)}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />
-                <div class="md-list-item-text" layout="column">
-                    <p>{{getUserNameFromId(usr)}}</p>
-                </div>
-            </md-list-item>
-        </md-list>
-      </md-dialog>
+        <div class="md-dialog-container" id="users-in-conv">
+            <md-dialog layout-padding>
+                <md-list flex>
+                    <h3>Users participating in this conversation:</h3>
+                    <md-list-item class="md-1-line" ng-repeat="usr in conv.users track by $index">
+                        <img ng-src="{{getAvatarFromId(usr)}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />
+                        <div class="md-list-item-text" layout="column">
+                            <p>{{getUserNameFromId(usr)}}</p>
+                        </div>
+                    </md-list-item>
+                </md-list>
+            </md-dialog>
+        </div>
     </div>
-  </div>
     
     <md-content class="conv-users-container" style="background-color:white">
         <md-list flex>
@@ -48,14 +48,29 @@
         </md-list>
     </md-content>
 
-    <div ng-show="showUsers">
-        <ul ng-init="inputno=[]">
-          <li ng-repeat="user in users" ng-if="conv.users.indexOf(user._id)<0" ng-class="isAlreadyInConv(user) ? 'disabled' : 'enabled'">
-              <a ng-click="addUserToConv(user);">{{user.name}}</a>
-          </li>
-        </ul>
-        <button type="button" ng-click="addUsersToConversation(); showUsers=false;">Add</button>
+    <div style="visibility: hidden">
+        <div class="md-dialog-container" id="add-users">
+            <md-dialog layout-padding>
+                <form>
+                    <md-dialog-content>
+                        <md-list flex ng-init="inputno=[]">
+                            <h3>Add users to this conversation:</h3>
+                            <md-list-item class="md-1-line" ng-repeat="usr in users track by $index" ng-if="conv.users.indexOf(usr._id)<0" ng-class="isAlreadyInConv(usr) ? 'disabled' : 'enabled'" ng-click="addUserToConv(usr);">
+                                <img ng-src="{{usr.avatarUrl}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />
+                                <div class="md-list-item-text" layout="column">
+                                    <p>{{usr.name}}</p>
+                                </div>
+                            </md-list-item>
+                        </md-list>
+                    </md-dialog-content>
+                    <md-dialog-actions>
+                        <md-button type="button" ng-click="hide(); addUsersToConversation();">Add</md-button>
+                    </md-dialog-actions>
+                </form>
+            </md-dialog>
+        </div>
     </div>
+    
 
     <form class="send-msg" name="myForm" ng-submit="sendMessage(myForm.newMessage); myForm.newMessage='';">
         <input style="width: 200px" type="text" ng-model="myForm.newMessage"></input>

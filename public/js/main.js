@@ -26,15 +26,36 @@
             });
         };
 
+        $scope.confirmClearConv = function(ev) {
+            var confirm = $mdDialog.confirm()
+            .parent(angular.element(document.querySelector('#popupContainer')))
+            .textContent('All the messages in this conversation will be lost forever.')
+            .clickOutsideToClose(true)
+            .title('Are you sure you want to clear this conversation?')
+            .targetEvent(ev)
+            .ok('Confirm')
+            .cancel('Cancel');
 
-       $scope.showPrerenderedDialog = function(ev) {
-        $mdDialog.show({
-          contentElement: '#users-in-conv',
-          parent: angular.element(document.querySelector('#popupContainer')),
-          targetEvent: ev,
-          clickOutsideToClose: true
-        });
-      };
+            $mdDialog.show(confirm).then(function(result) {
+                $scope.clearConversation()();
+            });
+        };
+
+        $scope.showPrerenderedDialog = function(ev, id) {
+            $mdDialog.show({
+                controller: function DialogController($scope, $mdDialog) {
+                    $scope.hide = function() {
+                        console.log("cloooogin");
+                        $mdDialog.hide();
+                    }
+                },
+                contentElement: id,
+                parent: angular.element(document.querySelector('#popupContainer')),
+                targetEvent: ev,
+                clickOutsideToClose: true
+            });
+        };
+
 
         /*
             DESIGN VARIABLES
@@ -86,11 +107,15 @@
         };
 
         $scope.addUsersToConversation = function() {
+            console.log($scope.inputno);
             var data = {
                 conv_id: $scope.conv._id,
                 users: $scope.inputno
             };
             $http.post("/api/conv/add/users", data).then(function(response) {
+                $scope.inputno.forEach(function(user){
+                    $scope.conv.users.push(user);
+                });
             });
         };
 
