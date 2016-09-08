@@ -151,7 +151,13 @@
                      <div ng-hide="!loggedIn" class="bubble-container">
                         <div class="bubble-inside">
                             <div ng-repeat="conv in conversations track by $index" ng-style="{'align-self': aligs[$index]}">
-                                <div class="bubble" ng-style="{'width': convSize[$index] + 'px', 'height': convSize[$index] + 'px', 'background-color': convCol[$index]}" ng-click="openConversation(conv);"><div ng-show="conv.unread!==undefined&&conv.unread!==0" style="text-align: center" ng-style="{margin: convSize[$index]/3 + 'px'}">{{conv.unread}}</div><div id="popup">{{conv.name}}</div></div>
+                                <div class="bubble" ng-style="{'width': convSize[$index] + 'px', 'height': convSize[$index] + 'px', 'background-color': convCol[$index]}" ng-click="openConversation(conv);">
+                                    <div ng-show="conv.unread!==undefined&&conv.unread!==0" class="unread">
+                                        {{conv.unread}}
+                                    </div>
+                                    <div id="popup" class="md-button md-raised md-cornered bubble-name" style="">{{conv.name}}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

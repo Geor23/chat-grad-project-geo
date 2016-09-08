@@ -167,6 +167,9 @@ ul {
     position: relative;
     bottom: 0px;
     border: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .bubble #popup {
@@ -175,12 +178,27 @@ ul {
 
 .bubble:hover #popup {
     display: block;
-    color: black;
+}
+
+.bubble:hover .unread {
+    display: none;
+}
+
+.bubble-name {
+    justify-content: center;
+}
+
+.unread {
+    background-color: red;
+    border-radius: 2px;
+    font-weight: bold;
+    color: white;
     text-align: center;
-    font-size: 11px;
-    padding: 0px;
-    margin-top: 10px;
-    letter-spacing: 1.5px;
+    height: 25px;
+    width: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .bubble-container {
@@ -200,7 +218,6 @@ ul {
 .bubble-inside {
      display: flex;
      flex-flow: row;
-     
      min-height: min-content;
      max-height: 100%;
      flex-wrap:  wrap-reverse;
