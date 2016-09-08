@@ -6,6 +6,8 @@
         <link rel="stylesheet" type="text/css" href="main.css">
         <link rel="stylesheet" type="text/css" href="top-menu.css">
         <link rel="stylesheet" type="text/css" href="registered-users.css">
+        <link rel="stylesheet" type="text/css" href="bubbles.css">
+        <link rel="stylesheet" type="text/css" href="start-conv.css">
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
         <link href="registered-users.html">
         <link href="bubbles.html">
@@ -53,113 +55,18 @@
                         <md-tabs md-dynamic-height md-border-bottom md-selected="selectedIndex">
 
                             <md-tab label="New Conversation">
-                                <md-content class="md-padding flex-col">
-
-                                    <md-content class="conv-users-container">
-                                        <md-list flex>
-                                            <md-list-item class="md-1-line" ng-repeat="usr in users" ng-click="addUserToConv(usr)"  ng-class="isAlreadyInConv(usr) ? 'disabled' : 'enabled'" ng-if="user._id!==usr._id">
-                                                <img ng-src="{{usr.avatarUrl}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />
-                                                <div class="md-list-item-text" layout="column">
-                                                    <p>{{usr.name}}</p>
-                                                </div>
-                                            </md-list-item>
-                                        </md-list>
-                                    </md-content>
-
-                                    <md-input-container flex="50">
-                                        <label>Chat Name</label>
-                                        <input required name="chatName" ng-model="inputConvName">
-                                        <div ng-messages="inputConvName.$error" md-auto-hide="false">
-                                            <div ng-message="required">This is required.</div>
-                                        </div>
-                                    </md-input-container>
-
-                                    <button class="chat-now-btn" ng-click="startConversation(inputConvName);" ng-disabled="inputConvName===''||inputno.length===0">CHAT NOW</button>
-
-                                </md-content>
+                                <div ng-include="'start-conv.html'"></div>
                             </md-tab>
 
                             <md-tab ng-if="showConversation" label="{{conv.name}}">
-                                <md-content class="flex-col">
-                                        <md-menu-bar style="padding: 0px">
-                                                <md-button style="padding: 0px; margin: 0px" ng-click="clearConversation()">
-                                                    <md-icon>delete_sweep</md-icon>
-                                                </md-button>
-
-                                                <md-button style="padding: 0px; margin: 0px" ng-click="showUsers=true">
-                                                    <md-icon>group_add</md-icon>
-                                                </md-button>
-
-                                                <md-button style="padding: 0px; margin: 0px" ng-click="edittingName=true">
-                                                    <md-icon>edit</md-icon>
-                                                </md-button>
-                                            
-                                                <md-button style="padding: 0px; margin: 0px" ng-click="leaveConversation()">
-                                                    <md-icon>keyboard_tab</md-icon>
-                                                </md-button>
-                                        </md-menu-bar>
-
-                                        <form ng-show="edittingName">
-                                            <input ng-model="conv.name"></input>
-                                            <md-button type="submit" ng-click="updateNameConv(conv.name);edittingName=false;">
-                                                <md-icon>done</md-icon>
-                                            </md-button>
-                                        </form>
-
-                                        <md-content class="conv-users-container" style="background-color:white">
-                                            <md-list flex>
-                                                <md-list-item class="md-2-line" ng-repeat="msg in messages">
-                                                    <img ng-src="{{user.avatarUrl}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />
-                                                    <div class="md-list-item-text" layout="column">
-                                                        <p>{{msg.from}}: Time: {{msg.time}}</p>
-                                                        <h5>{{msg.messageText}}</h5>
-                                                    </div>
-                                                </md-list-item>
-                                            </md-list>
-                                        </md-content>
-
-                                        <div ng-show="showUsers">
-                                            <ul ng-init="inputno=[]">
-                                              <li ng-repeat="user in users" ng-if="conv.users.indexOf(user._id)<0" ng-class="isAlreadyInConv(user) ? 'disabled' : 'enabled'">
-                                                  <a ng-click="addUserToConv(user);">{{user.name}}</a>
-                                              </li>
-                                            </ul>
-                                            <button type="button" ng-click="addUsersToConversation(); showUsers=false;">Add</button>
-                                        </div>
-
-                                        <form class="send-msg" name="myForm" ng-submit="sendMessage(myForm.newMessage); myForm.newMessage='';">
-                                            <input style="width: 200px" type="text" ng-model="myForm.newMessage"></input>
-                                            <md-button type="submit" ng-disabled="myForm.newMessage===''">
-                                                <md-icon>send</md-icon>
-                                            </md-button>
-                                        </form>
-
-                                </md-content>
+                               <div ng-include="'conv.html'"></div>
                             </md-tab>
 
                         </md-tabs>
                     </md-content>
 
-
-                    <!-- <div ng-include="'start-conv.html'"></div> -->
-
-                    <!-- <div ng-include="'conv.html'"></div> -->
-
-                    <!-- <div ng-include="'bubbles.html'"></div> -->
-
-
-                     <div ng-hide="!loggedIn" class="bubble-container">
-                        <div class="bubble-inside">
-                            <div ng-repeat="conv in conversations track by $index" ng-style="{'align-self': aligs[$index]}">
-                                <div class="bubble" ng-style="{'width': convSize[$index] + 'px', 'height': convSize[$index] + 'px', 'background-color': convCol[$index]}" ng-click="openConversation(conv);">
-                                    <div ng-show="conv.unread!==undefined&&conv.unread!==0" class="unread">
-                                        {{conv.unread}}
-                                    </div>
-                                    <div id="popup" class="md-button md-raised md-cornered bubble-name" style="">{{conv.name}}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div ng-hide="!loggedIn" class="bubble-container">
+                        <div ng-include="'bubbles.html'"></div>
                     </div>
 
 

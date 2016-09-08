@@ -1,21 +1,40 @@
-<div ng-show="showConversation" class="start-conv-container-open">
-    <form class="users-conv">
-        <input ng-show="edittingName" ng-model="conv.name"></input>
-        <p ng-hide="edittingName">{{conv.name}}</p>
+ <md-content class="flex-col">
+    <md-menu-bar style="padding: 0px">
+            <md-button style="padding: 0px; margin: 0px" ng-click="clearConversation()">
+                <md-icon>delete_sweep</md-icon>
+            </md-button>
 
-        <button type="button" ng-hide="edittingName" ng-click="edittingName=true">Edit conversation name</button>
-        <button type="submit" ng-show="edittingName" ng-click="updateNameConv(conv.name);edittingName=false;">Update conversation name</button>
+            <md-button style="padding: 0px; margin: 0px" ng-click="showUsers=true">
+                <md-icon>group_add</md-icon>
+            </md-button>
+
+            <md-button style="padding: 0px; margin: 0px" ng-click="edittingName=true">
+                <md-icon>edit</md-icon>
+            </md-button>
+        
+            <md-button style="padding: 0px; margin: 0px" ng-click="leaveConversation()">
+                <md-icon>keyboard_tab</md-icon>
+            </md-button>
+    </md-menu-bar>
+
+    <form ng-show="edittingName">
+        <input ng-model="conv.name"></input>
+        <md-button type="submit" ng-click="updateNameConv(conv.name);edittingName=false;">
+            <md-icon>done</md-icon>
+        </md-button>
     </form>
 
-    <div class="conv-container">
-        <ul><li ng-repeat="msg in messages">
-            From: {{msg.from}}, To: {{msg.to}}, Message: {{msg.messageText}}, Time: {{msg.time}}
-    </li></ul>
-    </div>
-    <button type="button" ng-click="clearConversation()">Clear conversation</button>
-    <button type="button" ng-click="leaveConversation()">Leave conversation</button>
-    <button type="button" ng-click="showUsers=true">Add Users To Conversation</button>
-    
+    <md-content class="conv-users-container" style="background-color:white">
+        <md-list flex>
+            <md-list-item class="md-2-line" ng-repeat="msg in messages">
+                <img ng-src="{{user.avatarUrl}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />
+                <div class="md-list-item-text" layout="column">
+                    <p>{{msg.from}}: Time: {{msg.time}}</p>
+                    <h5>{{msg.messageText}}</h5>
+                </div>
+            </md-list-item>
+        </md-list>
+    </md-content>
 
     <div ng-show="showUsers">
         <ul ng-init="inputno=[]">
@@ -25,8 +44,12 @@
         </ul>
         <button type="button" ng-click="addUsersToConversation(); showUsers=false;">Add</button>
     </div>
-    <form class="send-msg" ng-submit="sendMessage(newMessage)">
-        <input style="width: 400px" type="text" ng-model="newMessage"></input>
-        <button ng-disabled="newMessage===''" type="submit">Send</button>
+
+    <form class="send-msg" name="myForm" ng-submit="sendMessage(myForm.newMessage); myForm.newMessage='';">
+        <input style="width: 200px" type="text" ng-model="myForm.newMessage"></input>
+        <md-button type="submit" ng-disabled="myForm.newMessage===''">
+            <md-icon>send</md-icon>
+        </md-button>
     </form>
-</div>
+
+</md-content>

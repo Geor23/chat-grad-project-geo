@@ -1,0 +1,53 @@
+.flex-col {
+    position: relative;
+    display: flex;
+    flex-flow: column; 
+    height: 80%;
+    flex-wrap:  wrap;
+    justify-content: space-around;
+    overflow-y: auto;
+    margin: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.conv-users-container {
+    position: relative;
+    text-align: center;
+    overflow-y: auto;
+    height: 300px;
+    width: 80%;
+}
+
+.enabled {
+    opacity: 1;
+    color: black;
+    background-color: transparent;
+}
+
+.disabled {
+    opacity: 0.5;
+    color: green;
+    background-color: grey;
+    font-style: italic;
+}
+
+.chat-now-btn {
+    text-shadow: 1px 1px grey;
+    margin-top: 20px;
+    background-color: transparent;
+    border-width: 0px;
+}
+
+.chat-now-btn:hover {
+    border-bottom: 1px solid black;
+    cursor: pointer;
+}
+
+.send-msg {
+    position: relative;
+    text-align: center;
+    margin: 10px 100px;
+    padding: 0px;
+}
+

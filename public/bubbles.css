@@ -1,0 +1,47 @@
+.bubble-inside {
+     display: flex;
+     flex-flow: row;
+     min-height: min-content;
+     max-height: 100%;
+     flex-wrap:  wrap-reverse;
+     justify-content: space-around;
+}
+
+.bubble {
+    border-radius: 50%;
+    position: relative;
+    bottom: 0px;
+    border: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bubble #popup {
+    display: none;
+}
+
+.bubble:hover #popup {
+    display: block;
+}
+
+.bubble:hover .unread {
+    display: none;
+}
+
+.bubble-name {
+    justify-content: center;
+}
+
+.unread {
+    background-color: red;
+    border-radius: 2px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    height: 25px;
+    width: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
