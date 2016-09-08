@@ -15,19 +15,27 @@
             <md-button style="padding: 0px; margin: 0px" ng-click="leaveConversation()">
                 <md-icon>keyboard_tab</md-icon>
             </md-button>
-            <md-button style="padding: 0px; margin: 0px" ng-click="showUsersInConv=!showUsersInConv">
+            <md-button style="padding: 0px; margin: 0px" ng-click="showPrerenderedDialog($event)">
                 <md-icon>group</md-icon>
             </md-button>
     </md-menu-bar>
-    <md-list flex ng-show="showUsersInConv">
-        <md-list-item class="md-1-line" ng-repeat="usr in conv.users track by $index">
-            <img ng-src="{{getAvatarFromId(usr)}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />
-            <div class="md-list-item-text" layout="column">
-                <p>{{getUserNameFromId(usr)}}</p>
-            </div>
-        </md-list-item>
-    </md-list>
 
+    <div style="visibility: hidden">
+    <div class="md-dialog-container" id="users-in-conv">
+      <md-dialog layout-padding>
+        <md-list flex>
+            <h3>Users participating in this conversation:</h3>
+            <md-list-item class="md-1-line" ng-repeat="usr in conv.users track by $index">
+                <img ng-src="{{getAvatarFromId(usr)}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />
+                <div class="md-list-item-text" layout="column">
+                    <p>{{getUserNameFromId(usr)}}</p>
+                </div>
+            </md-list-item>
+        </md-list>
+      </md-dialog>
+    </div>
+  </div>
+    
     <md-content class="conv-users-container" style="background-color:white">
         <md-list flex>
             <md-list-item class="md-2-line" ng-repeat="msg in messages">

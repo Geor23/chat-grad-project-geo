@@ -4,33 +4,37 @@
     app.controller("ChatController", function($scope, $http, $interval, $mdDialog) {
 
 
-          $scope.customFullscreen = false;
+        $scope.customFullscreen = false;
 
 
-          $scope.showPrompt = function(ev) {
+        $scope.showPrompt = function(ev) {
             var confirm = $mdDialog.prompt()
             .parent(angular.element(document.querySelector('#popupContainer')))
-              .clickOutsideToClose(true)
-              .title('How would you like to rename your chat?')
-              .placeholder('Chat name')
-              .ariaLabel('Chat name')
-              .initialValue($scope.conv.name)
-              .targetEvent(ev)
-              .ok('Okay!')
-              .cancel('Cancel');
+            .clickOutsideToClose(true)
+            .title('How would you like to rename your chat?')
+            .placeholder('Chat name')
+            .ariaLabel('Chat name')
+            .initialValue($scope.conv.name)
+            .targetEvent(ev)
+            .ok('Okay!')
+            .cancel('Cancel');
 
             $mdDialog.show(confirm).then(function(result) {
                 if (result !== $scope.conv.name){
                     $scope.updateNameConv(result);
                 }
             });
-          };
+        };
 
 
-
-
-
-
+       $scope.showPrerenderedDialog = function(ev) {
+        $mdDialog.show({
+          contentElement: '#users-in-conv',
+          parent: angular.element(document.querySelector('#popupContainer')),
+          targetEvent: ev,
+          clickOutsideToClose: true
+        });
+      };
 
         /*
             DESIGN VARIABLES
