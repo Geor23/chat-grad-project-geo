@@ -13,6 +13,8 @@
     bottom: 0px;
     border: 2px solid black;
     display: flex;
+    flex-flow: row;
+    flex-wrap:  wrap-reverse;
     justify-content: center;
     align-items: center;
 }
