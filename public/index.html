@@ -3,19 +3,23 @@
     <head>
         <meta charset="utf-8">
         <title>Chat</title>
-        <link rel="stylesheet" type="text/css" href="main.css">
-        <link rel="stylesheet" type="text/css" href="top-menu.css">
-        <link rel="stylesheet" type="text/css" href="registered-users.css">
-        <link rel="stylesheet" type="text/css" href="bubbles.css">
-        <link rel="stylesheet" type="text/css" href="start-conv.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
-        <link href="registered-users.html">
-        <link href="bubbles.html">
-        <link href="start-conv.html">
-        <link href="conv.html">
-        <link href="top-menu.html">
-        <script src="js/main.js"></script>
 
+        <!-- CSS -->
+        <link rel="stylesheet" type="text/css" href="/css/main.css">
+        <link rel="stylesheet" type="text/css" href="/css/top-menu.css">
+        <link rel="stylesheet" type="text/css" href="/css/registered-users.css">
+        <link rel="stylesheet" type="text/css" href="/css/bubbles.css">
+        <link rel="stylesheet" type="text/css" href="/css/start-conv.css">
+        
+        <!-- TEMPLATES -->
+        <link href="/templates/registered-users.html">
+        <link href="/templates/bubbles.html">
+        <link href="/templates/start-conv.html">
+        <link href="/templates/conv.html">
+        <link href="/templates/top-menu.html">
+        
+        <!-- ANGULAR -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
         <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
@@ -29,6 +33,7 @@
         <!-- Angular Material Library -->
         <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
 
+        <script src="js/main.js"></script>
     </head>
     <body ng-controller="ChatController" ng-init="isOpen=false">
         <section>
@@ -36,8 +41,8 @@
         </section>
         <md-whiteframe class="md-whiteframe-20dp cont">
     
-            <div ng-include="'top-menu.html'"></div>
-            <div ng-include="'registered-users.html'"></div>
+            <div ng-include="'/templates/top-menu.html'"></div>
+            <div ng-include="'/templates/registered-users.html'"></div>
 
             <md-whiteframe ng-show="loggedIn" class="md-whiteframe-9dp home-button-container">
                 <div class="home-container preview-glyphs" ng-click="stopAndBackToHome()">
@@ -55,18 +60,18 @@
                         <md-tabs md-dynamic-height md-border-bottom md-selected="selectedIndex">
 
                             <md-tab label="New Conversation">
-                                <div ng-include="'start-conv.html'"></div>
+                                <div ng-include="'/templates/start-conv.html'"></div>
                             </md-tab>
 
                             <md-tab ng-if="showConversation" label="{{conv.name}}">
-                               <div ng-include="'conv.html'"></div>
+                               <div ng-include="'/templates/conv.html'"></div>
                             </md-tab>
 
                         </md-tabs>
                     </md-content>
 
                     <div ng-hide="!loggedIn" class="bubble-container">
-                        <div ng-include="'bubbles.html'"></div>
+                        <div ng-include="'/templates/bubbles.html'"></div>
                     </div>
 
 

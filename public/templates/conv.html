@@ -1,4 +1,4 @@
- <md-content class="flex-col">
+ <md-content class="flex-col" ng-init="showUsersInConv=false">
     <md-menu-bar style="padding: 0px">
             <md-button style="padding: 0px; margin: 0px" ng-click="clearConversation()">
                 <md-icon>delete_sweep</md-icon>
@@ -15,7 +15,18 @@
             <md-button style="padding: 0px; margin: 0px" ng-click="leaveConversation()">
                 <md-icon>keyboard_tab</md-icon>
             </md-button>
+            <md-button style="padding: 0px; margin: 0px" ng-click="showUsersInConv=!showUsersInConv">
+                <md-icon>group</md-icon>
+            </md-button>
     </md-menu-bar>
+    <md-list flex ng-show="showUsersInConv">
+        <md-list-item class="md-1-line" ng-repeat="usr in conv.users">
+            <img ng-src="{{getAvatarFromId(usr)}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />
+            <div class="md-list-item-text" layout="column">
+                <p>{{getUserNameFromId(usr)}}</p>
+            </div>
+        </md-list-item>
+    </md-list>
 
     <form ng-show="edittingName">
         <input ng-model="conv.name"></input>
