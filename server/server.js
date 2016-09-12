@@ -184,30 +184,6 @@ module.exports = function(port, db, githubAuthoriser) {
         });
     });
 
-    // get new messages
-    app.get("/api/messages/update", function(req, res) {
-        lastopened.findOne({
-            $and: [
-                {user : req.query.user},
-                {conv_id : ObjectId(req.query.conv_id)}
-            ]
-        }, function(err, docs) {
-                console.log(docs);
-                messages.find({
-                    $and: [
-                        {conv_id: req.query.conv_id},
-                        {time: {$gt: new Date(docs)}}
-                    ]
-                }, function(err, docs) {
-                    if (!err) {
-                        res.json(docs);
-                    } else {
-                        res.sendStatus(500);
-                    }
-                });
-            });
-    });
-
     // get a count for unread msgs in a conv
     app.get("/api/messagescount", function(req, res) {
         messages.count({

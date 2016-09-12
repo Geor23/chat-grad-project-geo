@@ -222,21 +222,8 @@
             );
         };
 
-        function updateMessages() {
-             $http.get("/api/messages/update", {
-                params: {
-                    user: $scope.user._id,
-                    conv_id: $scope.conv._id
-                }
-            })
-                .then(function(res) {
-                    updateLastOpened();
-                    res.data.forEach(function(msg) {
-                        $scope.messages.push(msg);
-                    });
-                }, function(response) {
-                }
-            );
+        function updateMessages(old, new) {
+             
         }
 
         function updateConvAndSetNotification() {
