@@ -1,7 +1,72 @@
 (function() {
     var app = angular.module("ChatApp", ["ngMaterial"]);
 
-    app.controller("ChatController", function($scope, $http, $interval) {
+    app.controller("ChatController", function($scope, $http, $interval, $mdDialog) {
+
+        $scope.customFullscreen = false;
+
+        $scope.showPrompt = function(ev) {
+            var confirm = $mdDialog.prompt()
+            .parent(angular.element(document.querySelector("#popupContainer")))
+            .clickOutsideToClose(true)
+            .title("How would you like to rename your chat?")
+            .placeholder("Chat name")
+            .ariaLabel("Chat name")
+            .initialValue($scope.conv.name)
+            .targetEvent(ev)
+            .ok("Okay!")
+            .cancel("Cancel");
+
+            $mdDialog.show(confirm).then(function(result) {
+                if (result !== $scope.conv.name) {
+                    $scope.updateNameConv(result);
+                }
+            });
+        };
+
+        $scope.confirmClearConv = function(ev) {
+            var confirm = $mdDialog.confirm()
+            .parent(angular.element(document.querySelector("#popupContainer")))
+            .textContent("All the messages in this conversation will be lost forever.")
+            .clickOutsideToClose(true)
+            .title("Are you sure you want to clear this conversation?")
+            .targetEvent(ev)
+            .ok("Confirm")
+            .cancel("Cancel");
+
+            $mdDialog.show(confirm).then(function(result) {
+                $scope.clearConversation();
+            });
+        };
+
+        $scope.confirmLeaveConv = function(ev) {
+            var confirm = $mdDialog.confirm()
+            .parent(angular.element(document.querySelector("#popupContainer")))
+            .clickOutsideToClose(true)
+            .title("Are you sure you want to leave this conversation?")
+            .targetEvent(ev)
+            .ok("Confirm")
+            .cancel("Cancel");
+
+            $mdDialog.show(confirm).then(function(result) {
+                $scope.leaveConversation();
+            });
+        };
+
+        $scope.showPrerenderedDialog = function(ev, id) {
+            $mdDialog.show({
+                controller: function DialogController($scope, $mdDialog) {
+                    $scope.hide = function() {
+                        $mdDialog.hide();
+                    };
+                },
+                contentElement: id,
+                parent: angular.element(document.querySelector("#popupContainer")),
+                targetEvent: ev,
+                clickOutsideToClose: true
+            });
+        };
+
         /*
             DESIGN VARIABLES
         */
@@ -41,10 +106,11 @@
             $scope.stopAndBackToHome();
         };
 
-        $scope.updateNameConv = function() {
+        $scope.updateNameConv = function(newname) {
+            $scope.conv.name = newname;
             var data = {
                 conv_id: $scope.conv._id,
-                name: $scope.conv.name
+                name: newname
             };
             $http.post("/api/conv/name", data).then(function(response) {
             });
@@ -56,6 +122,9 @@
                 users: $scope.inputno
             };
             $http.post("/api/conv/add/users", data).then(function(response) {
+                $scope.inputno.forEach(function(user) {
+                    $scope.conv.users.push(user);
+                });
             });
         };
 
