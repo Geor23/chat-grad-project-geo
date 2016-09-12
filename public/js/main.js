@@ -166,21 +166,18 @@
                 name: name,
                 time: d
             };
-            
             $http.post("/api/conv", data).then(function(response) {
                 $scope.conv = response.data;
-                console.log(JSON.stringify($scope.conv));
                 $scope.getMessages();
                 $scope.showConversation = true;
                 changeTab();
             }, function(response) {
             });
-            
         };
 
         function changeTab() {
-            $scope.selectedIndex=1;
-            $scope.inputConvName='';
+            $scope.selectedIndex = 1;
+            $scope.inputConvName = "";
             $scope.inputno = [];
         }
 
@@ -328,7 +325,7 @@
         };
 
         $scope.getUserNameFromId = function(userid) {
-            var res = '';
+            var res = "";
             $scope.users.forEach(function(user) {
                 if (user._id === userid) {
                     res = user.name;
@@ -338,7 +335,7 @@
         };
 
         $scope.getAvatarFromId = function(userid) {
-            var res = '';
+            var res = "";
             $scope.users.forEach(function(user) {
                 if (user._id === userid) {
                     res = user.avatarUrl;
