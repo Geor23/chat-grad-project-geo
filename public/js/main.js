@@ -92,21 +92,18 @@
                 name: name,
                 time: d
             };
-            
             $http.post("/api/conv", data).then(function(response) {
                 $scope.conv = response.data;
-                console.log(JSON.stringify($scope.conv));
                 $scope.getMessages();
                 $scope.showConversation = true;
                 changeTab();
             }, function(response) {
             });
-            
         };
 
         function changeTab() {
-            $scope.selectedIndex=1;
-            $scope.inputConvName='';
+            $scope.selectedIndex = 1;
+            $scope.inputConvName = "";
             $scope.inputno = [];
         }
 
