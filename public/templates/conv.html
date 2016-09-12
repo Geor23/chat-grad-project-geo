@@ -36,7 +36,7 @@
         </div>
     </div>
     
-    <md-content class="conv-users-container" style="background-color:white">
+    <md-content class="conv-users-container" style="background-color:white" scroll-glue>
         <md-list flex>
             <md-list-item class="md-2-line" ng-repeat="msg in messages">
                 <img ng-src="{{user.avatarUrl}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />
