@@ -19,6 +19,13 @@
     width: 80%;
 }
 
+.msg-container {
+    position: relative;
+    overflow-y: auto;
+    height: 300px;
+    width: 80%;
+}
+
 .enabled {
     opacity: 1;
     color: black;
@@ -49,4 +56,22 @@
     text-align: center;
     margin: 10px 100px;
     padding: 0px;
+}
+
+.msg-details {
+    font-style: italic;
+}
+
+.msg-det {
+    display: inline;
+    font-size: 11px !important;
+}
+
+.from {
+    left: 0px;
+}
+
+.time {
+    position: absolute;
+    right: 0px;
 }

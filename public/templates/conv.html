@@ -36,14 +36,16 @@
         </div>
     </div>
     
-    <md-content class="conv-users-container" style="background-color:white">
+    <md-content class="msg-container">
         <md-list flex>
             <md-list-item class="md-2-line" ng-repeat="msg in messages">
                 <img ng-src="{{user.avatarUrl}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />
                 <div class="md-list-item-text">
                     <h3>{{msg.messageText}}</h3>
-                    <p>{{msg.from}}</p>
-                    
+                    <div class="msg-details">
+                        <p class="msg-det from">{{msg.from}}</p>
+                        <p class="msg-det time">{{msg.time}}</p>
+                    </div>
                 </div>
             </md-list-item>
         </md-list>
