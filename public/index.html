@@ -4,27 +4,48 @@
         <meta charset="utf-8">
         <title>Chat</title>
         <link rel="stylesheet" type="text/css" href="main.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.1/angular.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="top-menu.css">
+        <link rel="stylesheet" type="text/css" href="registered-users.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
         <link href="registered-users.html">
         <link href="bubbles.html">
         <link href="start-conv.html">
         <link href="conv.html">
+        <link href="top-menu.html">
         <script src="js/main.js"></script>
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+
+        <!-- Angular Material requires Angular.js Libraries -->
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <!-- Angular Material Library -->
+        <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+
     </head>
-    <body ng-controller="ChatController">
-
-        <div class="cont">
-            <section ng-show="loggedIn">
-                <p class="logged-in-as">{{user.name}}.</p>
-            </section>
+    <body ng-controller="ChatController" ng-init="isOpen=false">
+        <section>
+            <h1 class="app-name">Chat App</h1>
+        </section>
+        <md-whiteframe class="md-whiteframe-20dp cont">
+    
+            <div ng-include="'top-menu.html'"></div>
             <div ng-include="'registered-users.html'"></div>
-            <div class="cont2">
-                <a ng-show="!loggedIn" href="{{loginUri}}" style="text-align: center; top: 50%; left:50%; position: absolute">Log in</a>
-                
-                
 
-                
+            <md-whiteframe class="md-whiteframe-9dp home-button-container">
+                <div class="home-container preview-glyphs" ng-click="stopAndBackToHome()">
+                    <md-icon md-font-icon="icon-home" style="color:black; font-size: 32px; height: 32px">home</md-icon>
+                </div>
+            </md-whiteframe>
+
+
+            <md-whiteframe class="md-whiteframe-20dp cont2">
+                <a ng-show="!loggedIn" href="{{loginUri}}" style="text-align: center; top: 50%; left:50%; position: absolute">Log in</a>
 
                 <div ng-include="'start-conv.html'"></div>
 
@@ -32,7 +53,7 @@
 
                 <div ng-include="'bubbles.html'"></div>
             </div>
-        </div>
+        </md-whiteframe>
 
 
     </body>

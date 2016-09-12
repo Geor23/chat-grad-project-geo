@@ -1,0 +1,16 @@
+<md-fab-speed-dial ng-show="loggedIn" md-open="isOpen" md-direction="left" class="md-scale menu-container">
+        <md-fab-trigger>
+          <md-button>
+            <p class="logged-in-as">{{user.name}}</p>
+          </md-button>
+        </md-fab-trigger>
+
+        <md-fab-actions>
+          <md-button>
+            <p class="menu-item">View Profile</p>
+          </md-button>
+          <md-button>
+            <p class="menu-item">Log Out</p>
+          </md-button>
+        </md-fab-actions>
+      </md-fab-speed-dial>

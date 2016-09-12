@@ -9,88 +9,18 @@ ul {
     padding: 0px;
 }
 
-.container {
-    display: inline-block;
-    cursor: pointer;
-    top: 50%;
-    width: 29px;
-    margin-top: -12px;
-    margin-left: 3px;
-    position: relative;
-}
 
-.bar1, .bar2, .bar3 {
-    width: 25px;
-    height: 3px;
-    background-color: black;
-    margin: 4px 2px 4px 2px;
-    transition: 0.4s;
-}
-
-/* Rotate first bar */
-.bar1-change{
-    width: 25px;
-    height: 3px;
-    background-color: white;
-    margin: 4px 2px 4px 2px;
-    transition: 0.4s;
-    -webkit-transform: rotate(-45deg) translate(-9px, 6px) ;
-    transform: rotate(-45deg) translate(-9px, 6px) ;
-}
-
-/* Fade out the second bar */
-.bar2-change{
-    width: 25px;
-    height: 3px;
-    transition: 0.4s;
-    opacity: 0;
-}
-
-/* Rotate last bar */
-.bar3-change{
-    width: 25px;
-    height: 3px;
-    background-color: white;
-    margin: 4px 2px 4px 2px;
-    transition: 0.4s;
-    -webkit-transform: rotate(45deg) translate(-8px, -8px) ;
-    transform: rotate(45deg) translate(-8px, -8px) ;
-}
-
-.logged-in-as {
-     right: 10px; 
+.app-name {
+    left: 10px; 
      position: absolute;
-}
-
-.menu-container-in {
-    background-color: white;
-    height: 140px;
-    top: 50%;
-    margin-top: -70px;
-    overflow: hidden;
-    width: 40px;
-    left: 0px;
-    position: absolute;
-    transition: 1s;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-    opacity: 0.7;
-    z-index:100;
-}
-
-.menu-container-out {
-    background-color: #2E2E2E;
-    height: 100%;
-    overflow: auto;
-    width: 300px;
-    left: 0px;
-    transition: 1s;
-    position: absolute;
-    border-radius: 5px;
-    border-color: black;
-    border-width: 10px; 
-    opacity: 0.8;
-    z-index:100;
+     letter-spacing: 4px;
+     color: black;
+     font-weight: bold;
+     cursor: pointer;
+     transition: .7s;
+     font-style: italic;
+     font-family: 'Pacifico', cursive;
+     margin: 0px;
 }
 
 .white-writing {
@@ -170,7 +100,7 @@ ul {
     left: 50px;
     top: 50px;
     bottom: 50px;
-    background-color: green;
+    background-color: rgba(0, 128, 0, 0.42);
     border: 2px solid black;
     border-radius: 0.4%;
     box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
@@ -179,10 +109,10 @@ ul {
 
 .cont2 {
     position: absolute;
-    right: 50px;
-    left: 50px;
-    top: 50px;
-    bottom: 50px;
+    right: 80px;
+    left: 80px;
+    top: 80px;
+    bottom: 80px;
     background-color: white;
     border: 2px solid black;
     border-radius: 0.4%;
@@ -190,29 +120,22 @@ ul {
     z-index: 20;
 }
 
-.reg {
-    letter-spacing: 2px;
-    padding: 40px;
-    margin: 40px;
-    border-bottom: 5px double black;
-    text-align: center;
-    color: white;
-}
 
 .margin {
-    padding: 20px;
-    margin: 20px;
-    border-bottom: 2px dotted black;
+    padding: 5px;
+    margin: 5px;
     text-align: center;
 }
 
 .users {
     color: white;
-    border-bottom: 3px solid transparent;
+    border-bottom: 2px solid transparent;
+    padding-bottom: 2px;
 }
 
 .users:hover {
-    border-bottom: 3px solid white;
+    border-bottom: 2px solid white;
+    padding-bottom: 2px;
     cursor: pointer; 
 }
 
@@ -301,4 +224,85 @@ ul {
     text-align: center;
     margin: 10px 100px;
     padding: 0px;
+}
+
+
+/*
+
+    HOME BUTTON
+
+*/
+.home-button-container {
+    background-color: white;
+    top: 350px;
+    bottom: 350px;
+    overflow: hidden;
+    width: 40px;
+    right: 0px;
+    position: absolute;
+    transition: 1s;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    opacity: 0.7;
+    z-index:100;
+}
+
+.home-container {
+    display: inline-block;
+    cursor: pointer;
+    top: 50%;
+    width: 29px;
+    margin-top: -12px;
+    margin-left: 6px;
+    position: fixed;
+}
+
+.home-bar1 {
+    width: 18px;
+    height: 3px;
+    background-color: black;
+    margin: 4px 2px 4px 2px;
+    transition: 0.4s;
+    transform: rotate(45deg) translate(10px, -2px) ;
+}
+
+.home-bar2 {
+    width: 18px;
+    height: 3px;
+    background-color: black;
+    margin: 4px 2px 4px 2px;
+    transition: 0.4s;
+    transform: rotate(-45deg) translate(0px, -2px) ;
+}
+
+.home-bar3 {
+    width: 22px;
+    height: 3px;
+    background-color: black;
+    margin: 0px 0px 0px 2px;
+    transition: 0.4s;
+}
+
+.home-bar4 {
+    width: 20px;
+    height: 3px;
+    background-color: black;
+    transition: 0.4s;
+    transform: rotate(90deg) translate(4px, -15px) ;
+}
+
+.home-bar5 {
+    width: 20px;
+    height: 3px;
+    background-color: black;
+    transition: 0.4s;
+    transform: rotate(90deg) translate(0px, 6px) ;
+}
+
+.home-bar6 {
+    width: 22px;
+    height: 3px;
+    background-color: black;
+    margin: 7px 1px 4px 4px;
+    transition: 0.4s;
 }

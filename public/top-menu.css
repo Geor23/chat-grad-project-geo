@@ -1,0 +1,58 @@
+/*
+--------------------------------------------------
+    LOGGED IN AS AND MENU
+--------------------------------------------------
+*/
+
+
+.menu-container {
+     right: 10px; 
+     position: absolute;
+}
+
+.logged-in-as {
+    border: 1px solid black;
+     text-transform: uppercase;
+     letter-spacing: 2px;
+     color: white;
+     font-weight: bold;
+     cursor: pointer;
+     padding: 12px;
+     margin: 3px;
+}
+
+.logged-in-as:hover {
+    border: 1px solid black;
+     text-transform: uppercase;
+     letter-spacing: 4px;
+     color: black;
+     font-weight: bold;
+     cursor: pointer;
+     padding: 8px;
+     padding: 12px;
+     margin: 3px;
+}
+
+.menu-item { 
+    border: 1px dashed black;
+     text-transform: uppercase;
+     letter-spacing: 2px;
+     color: black;
+     font-weight: bold;
+     cursor: pointer;
+     padding: 8px;
+     padding: 12px;
+     margin: 3px;
+}
+
+.menu-item:hover {
+     border: 1px dotted black;
+     text-transform: uppercase;
+     letter-spacing: 4px;
+     color: black;
+     font-weight: bold;
+     cursor: pointer;
+     padding: 8px;
+     padding: 12px;
+     margin: 3px;
+}

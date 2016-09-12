@@ -1,5 +1,5 @@
 (function() {
-    var app = angular.module("ChatApp", []);
+    var app = angular.module("ChatApp", ["ngMaterial"]);
 
     app.controller("ChatController", function($scope, $http, $interval) {
         /*
@@ -38,7 +38,7 @@
             };
             $http.post("/api/conv/rem/users", data).then(function(response) {
             });
-            stopAndBackToHome();
+            $scope.stopAndBackToHome();
         };
 
         $scope.updateNameConv = function() {
@@ -59,9 +59,13 @@
             });
         };
 
-        function stopAndBackToHome() {
+        $scope.stopAndBackToHome = function() {
             $scope.showConversation = false;
             $scope.conv = undefined;
+            cancelInt();
+        };
+
+        function cancelInt() {
             $interval.cancel(int);
             int = undefined;
         }
