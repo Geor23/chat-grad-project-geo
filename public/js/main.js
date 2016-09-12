@@ -1,5 +1,5 @@
 (function() {
-    var app = angular.module("ChatApp", ["ngMaterial", "luegg.directives"]);
+    var app = angular.module("ChatApp", ["ngMaterial"]);
 
     app.controller("ChatController", function($scope, $http, $interval, $mdDialog) {
 
@@ -223,16 +223,15 @@
         };
 
         function updateMessages(newM) {
-             if (newM === []) {
+            if (newM === []) {
                 $scope.messages = newM;
-             } else {
+            } else {
                 newM.forEach(function(msg) {
                     if (!contains($scope.messages, msg._id)) {
-                        console.log(msg._id);
                         $scope.messages.push(msg);
                     }
                 });
-             }
+            }
         }
 
         function contains(array, uId) {
