@@ -1,5 +1,5 @@
 (function() {
-    var app = angular.module("ChatApp", ["ngMaterial"]);
+    var app = angular.module("ChatApp", ["ngMaterial", "luegg.directives"]);
 
     app.controller("ChatController", function($scope, $http, $interval, $mdDialog) {
 
