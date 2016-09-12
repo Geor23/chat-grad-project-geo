@@ -85,7 +85,7 @@
     margin: 4px 2px 4px 2px;
     transition: 0.4s;
     -webkit-transform: rotate(45deg) translate(-8px, -8px) ;
-    transform: rotate(45deg) translate(-8px, -8px) ;
+    transform: rotate(45deg) translate(-8px, -7px) ;
 }
 
 /*- list of users -*/

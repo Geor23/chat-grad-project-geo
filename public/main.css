@@ -23,47 +23,87 @@ ul {
      margin: 0px;
 }
 
-.white-writing {
-    color: white;
+.cont {
+    position: absolute;
+    right: 50px;
+    left: 50px;
+    top: 50px;
+    bottom: 50px;
+    background-color: rgba(0, 128, 0, 0.42);
+    border: 2px solid black;
+    border-radius: 0.4%;
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+    z-index: 10;
 }
 
-.start-conv-container {
-    top:30%; 
-    left: 40%; 
+.cont2 {
     position: absolute;
-    width: 800px;
-    height: 200px;
-    background: rgba(255,255,255, 0.8);
-    border-radius: 15px;
-    margin-top: -100px;
-    margin-left: -400px;
+    right: 80px;
+    left: 80px;
+    top: 80px;
+    bottom: 80px;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 0.4%;
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+    z-index: 20;
 }
 
-.start-conv-container-open {
-    top:25%; 
-    left: 40%; 
-    position: absolute;
-    width: 800px;
-    transition: 1s;
-    background: rgba(255,255,255, 0.8);
-    height: 700px;
-    border-radius: 200px;
-    margin-top: -100px;
-    margin-left: -400px;
+
+
+
+/*
+    START CONV
+*/
+
+.flex-col {
+    position: relative;
+    display: flex;
+    flex-flow: column; 
+    height: 80%;
+    flex-wrap:  wrap;
+    justify-content: space-around;
+    overflow-y: auto;
+    margin: 10px;
+    justify-content: center;
+    align-items: center;
 }
 
 .chat-now-btn {
-    bottom : 40px;
-    left: 50%;
     text-shadow: 1px 1px grey;
-    margin-left: -20px;
-    position: absolute;
+    margin-top: 20px;
 }
 
 .chat-now-btn:hover {
     border-bottom: 1px solid black;
     cursor: pointer;
 }
+
+.enabled {
+    opacity: 1;
+    color: black;
+    background-color: transparent;
+}
+
+.disabled {
+    opacity: 0.5;
+    color: green;
+    background-color: grey;
+    font-style: italic;
+}
+
+.conv-users-container {
+    position: relative;
+    text-align: center;
+    overflow-y: auto;
+    height: 300px;
+    width: 80%;
+}
+
+/* ------------------------*/
+
+
+
 
 .start-conv {
     position: relative;
@@ -94,32 +134,6 @@ ul {
     cursor: pointer;
 }
 
-.cont {
-    position: absolute;
-    right: 50px;
-    left: 50px;
-    top: 50px;
-    bottom: 50px;
-    background-color: rgba(0, 128, 0, 0.42);
-    border: 2px solid black;
-    border-radius: 0.4%;
-    box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
-    z-index: 10;
-}
-
-.cont2 {
-    position: absolute;
-    right: 80px;
-    left: 80px;
-    top: 80px;
-    bottom: 80px;
-    background-color: white;
-    border: 2px solid black;
-    border-radius: 0.4%;
-    box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
-    z-index: 20;
-}
-
 
 .margin {
     padding: 5px;
@@ -139,27 +153,6 @@ ul {
     cursor: pointer; 
 }
 
-.enabled {
-    opacity: 1;
-    color: black;
-    background-color: transparent;
-}
-
-.disabled {
-    opacity: 0.5;
-    color: red;
-    background-color: grey
-}
-
-.conv-users-container {
-    position: relative;
-    text-align: center;
-    margin: 10px 150px;
-    padding: 50px;
-    border: 1px dotted black;
-    overflow-y: auto;
-    height: 200px;
-}
 
 .add-user {
     margin: 10px;
@@ -189,23 +182,45 @@ ul {
 }
 
 .bubble-container {
-
+    position: relative;
     display: flex;
     flex-flow: row; 
-    width: 500px;
+    height: 80%;
+    width: 35%;
     flex-wrap:  wrap-reverse;
-    bottom: 10px;
-    position: absolute;
     justify-content: space-around;
-    right: 10px;
     overflow-y: auto;
-    height: 900;
+    border-bottom: 3px solid black;
+    border-right: 3px solid black;
+    border-left: 3px solid black;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10%;
+}
+
+.non-bubble-container {
+    position: relative;
+    width: 35%;
+    overflow-y: auto;
+    height: 80%;
     border-bottom: 3px solid black;
     border-right: 3px solid black;
     border-left: 3px solid black;
     padding: 10px;
     border-radius: 10%;
-    /*background-color: white;*/
+    margin: 10px;
+}
+
+.content-container {
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: row; 
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+    padding: 10px;
 }
 
 .conv-container {
@@ -255,54 +270,4 @@ ul {
     margin-top: -12px;
     margin-left: 6px;
     position: fixed;
-}
-
-.home-bar1 {
-    width: 18px;
-    height: 3px;
-    background-color: black;
-    margin: 4px 2px 4px 2px;
-    transition: 0.4s;
-    transform: rotate(45deg) translate(10px, -2px) ;
-}
-
-.home-bar2 {
-    width: 18px;
-    height: 3px;
-    background-color: black;
-    margin: 4px 2px 4px 2px;
-    transition: 0.4s;
-    transform: rotate(-45deg) translate(0px, -2px) ;
-}
-
-.home-bar3 {
-    width: 22px;
-    height: 3px;
-    background-color: black;
-    margin: 0px 0px 0px 2px;
-    transition: 0.4s;
-}
-
-.home-bar4 {
-    width: 20px;
-    height: 3px;
-    background-color: black;
-    transition: 0.4s;
-    transform: rotate(90deg) translate(4px, -15px) ;
-}
-
-.home-bar5 {
-    width: 20px;
-    height: 3px;
-    background-color: black;
-    transition: 0.4s;
-    transform: rotate(90deg) translate(0px, 6px) ;
-}
-
-.home-bar6 {
-    width: 22px;
-    height: 3px;
-    background-color: black;
-    margin: 7px 1px 4px 4px;
-    transition: 0.4s;
 }
