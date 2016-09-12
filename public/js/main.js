@@ -251,7 +251,7 @@
         };
 
         $scope.getUserNameFromId = function(userid) {
-            var res = '';
+            var res = "";
             $scope.users.forEach(function(user) {
                 if (user._id === userid) {
                     res = user.name;
@@ -261,7 +261,7 @@
         };
 
         $scope.getAvatarFromId = function(userid) {
-            var res = '';
+            var res = "";
             $scope.users.forEach(function(user) {
                 if (user._id === userid) {
                     res = user.avatarUrl;
