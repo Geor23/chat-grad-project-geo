@@ -5,9 +5,12 @@
       <div ng-class="!toggle ? 'bar3' : 'bar3-change'"></div>
     </div>
     <h5 ng-show="toggle" class="reg">REGISTERED USERS</h5>
-    <ul ng-show="toggle" class="ireg">
-        <li ng-repeat="user in users">
-            <div class="margin"><span class="users">{{user.name}}</span></div>
-        </li>
-    </ul>
+    <md-list flex ng-show="toggle" class="ireg">
+      <md-list-item class="md-1-line" ng-repeat="usr in users">
+          <img ng-src="{{usr.avatarUrl}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />
+          <div class="md-list-item-text" layout="column">
+              <span class="users">{{usr.name}}</span>
+          </div>
+      </md-list-item>
+    </md-list>
 </md-whiteframe>

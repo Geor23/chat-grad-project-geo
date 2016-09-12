@@ -251,11 +251,23 @@
         };
 
         $scope.getUserNameFromId = function(userid) {
+            var res = "";
             $scope.users.forEach(function(user) {
                 if (user._id === userid) {
-                    return user.name;
+                    res = user.name;
                 }
             });
+            return res;
+        };
+
+        $scope.getAvatarFromId = function(userid) {
+            var res = "";
+            $scope.users.forEach(function(user) {
+                if (user._id === userid) {
+                    res = user.avatarUrl;
+                }
+            });
+            return res;
         };
 
         $scope.getListOfUsers = function(arr) {

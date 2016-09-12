@@ -1,0 +1,23 @@
+<md-content class="md-padding flex-col">
+    <md-content class="conv-users-container">
+        <md-list flex>
+            <md-list-item class="md-1-line" ng-repeat="usr in users" ng-click="addUserToConv(usr)"  ng-class="isAlreadyInConv(usr) ? 'disabled' : 'enabled'" ng-if="user._id!==usr._id">
+                <img ng-src="{{usr.avatarUrl}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />
+                <div class="md-list-item-text" layout="column">
+                    <p>{{usr.name}}</p>
+                </div>
+            </md-list-item>
+        </md-list>
+    </md-content>
+
+    <md-input-container flex="50">
+        <label>Chat Name</label>
+        <input required name="chatName" ng-model="inputConvName">
+        <div ng-messages="inputConvName.$error" md-auto-hide="false">
+            <div ng-message="required">This is required.</div>
+        </div>
+    </md-input-container>
+
+    <button class="chat-now-btn" ng-click="startConversation(inputConvName);" ng-disabled="inputConvName===''||inputno.length===0">CHAT NOW</button>
+
+</md-content>

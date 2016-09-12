@@ -23,7 +23,7 @@
     background-color: #2E2E2E;
     overflow-y: auto;
     overflow-x: hidden;
-    width: 200px;
+    width: 300px;
     left: 80px;
     top: 80px;
     bottom: 80px;
@@ -103,4 +103,22 @@
 
 .ireg {
     margin-left: 30px;
+}
+
+.margin {
+    padding: 5px;
+    margin: 5px;
+    text-align: center;
+}
+
+.users {
+    color: white;
+    border-bottom: 2px solid transparent;
+    padding-bottom: 2px;
+}
+
+.users:hover {
+    border-bottom: 2px solid white;
+    padding-bottom: 2px;
+    cursor: pointer; 
 }
