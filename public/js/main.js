@@ -216,14 +216,33 @@
             })
                 .then(function(res) {
                     updateLastOpened();
-                    $scope.messages = res.data;
+                    updateMessages(res.data);
                 }, function(response) {
                 }
             );
         };
 
-        function updateMessages(old, new) {
-             
+        function updateMessages(newM) {
+             if (newM === []) {
+                $scope.messages = newM;
+             } else {
+                newM.forEach(function(msg) {
+                    if (!contains($scope.messages, msg._id)) {
+                        console.log(msg._id);
+                        $scope.messages.push(msg);
+                    }
+                });
+             }
+        }
+
+        function contains(array, uId) {
+            var res = false;
+            array.forEach(function(item) {
+                if (item._id === uId) {
+                    res = true;
+                }
+            });
+            return res;
         }
 
         function updateConvAndSetNotification() {
