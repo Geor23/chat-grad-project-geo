@@ -3,24 +3,22 @@
 
     app.controller("ChatController", function($scope, $http, $interval, $mdDialog) {
 
-
         $scope.customFullscreen = false;
-
 
         $scope.showPrompt = function(ev) {
             var confirm = $mdDialog.prompt()
-            .parent(angular.element(document.querySelector('#popupContainer')))
+            .parent(angular.element(document.querySelector("#popupContainer")))
             .clickOutsideToClose(true)
-            .title('How would you like to rename your chat?')
-            .placeholder('Chat name')
-            .ariaLabel('Chat name')
+            .title("How would you like to rename your chat?")
+            .placeholder("Chat name")
+            .ariaLabel("Chat name")
             .initialValue($scope.conv.name)
             .targetEvent(ev)
-            .ok('Okay!')
-            .cancel('Cancel');
+            .ok("Okay!")
+            .cancel("Cancel");
 
             $mdDialog.show(confirm).then(function(result) {
-                if (result !== $scope.conv.name){
+                if (result !== $scope.conv.name) {
                     $scope.updateNameConv(result);
                 }
             });
@@ -28,13 +26,13 @@
 
         $scope.confirmClearConv = function(ev) {
             var confirm = $mdDialog.confirm()
-            .parent(angular.element(document.querySelector('#popupContainer')))
-            .textContent('All the messages in this conversation will be lost forever.')
+            .parent(angular.element(document.querySelector("#popupContainer")))
+            .textContent("All the messages in this conversation will be lost forever.")
             .clickOutsideToClose(true)
-            .title('Are you sure you want to clear this conversation?')
+            .title("Are you sure you want to clear this conversation?")
             .targetEvent(ev)
-            .ok('Confirm')
-            .cancel('Cancel');
+            .ok("Confirm")
+            .cancel("Cancel");
 
             $mdDialog.show(confirm).then(function(result) {
                 $scope.clearConversation();
@@ -43,12 +41,12 @@
 
         $scope.confirmLeaveConv = function(ev) {
             var confirm = $mdDialog.confirm()
-            .parent(angular.element(document.querySelector('#popupContainer')))
+            .parent(angular.element(document.querySelector("#popupContainer")))
             .clickOutsideToClose(true)
-            .title('Are you sure you want to leave this conversation?')
+            .title("Are you sure you want to leave this conversation?")
             .targetEvent(ev)
-            .ok('Confirm')
-            .cancel('Cancel');
+            .ok("Confirm")
+            .cancel("Cancel");
 
             $mdDialog.show(confirm).then(function(result) {
                 $scope.leaveConversation();
@@ -59,17 +57,15 @@
             $mdDialog.show({
                 controller: function DialogController($scope, $mdDialog) {
                     $scope.hide = function() {
-                        console.log("cloooogin");
                         $mdDialog.hide();
-                    }
+                    };
                 },
                 contentElement: id,
-                parent: angular.element(document.querySelector('#popupContainer')),
+                parent: angular.element(document.querySelector("#popupContainer")),
                 targetEvent: ev,
                 clickOutsideToClose: true
             });
         };
-
 
         /*
             DESIGN VARIABLES
@@ -121,13 +117,12 @@
         };
 
         $scope.addUsersToConversation = function() {
-            console.log($scope.inputno);
             var data = {
                 conv_id: $scope.conv._id,
                 users: $scope.inputno
             };
             $http.post("/api/conv/add/users", data).then(function(response) {
-                $scope.inputno.forEach(function(user){
+                $scope.inputno.forEach(function(user) {
                     $scope.conv.users.push(user);
                 });
             });
