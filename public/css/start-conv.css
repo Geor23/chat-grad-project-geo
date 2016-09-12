@@ -72,6 +72,6 @@
 }
 
 .time {
-    position: absolute;
+    float: right;
     right: 0px;
 }

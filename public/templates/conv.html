@@ -39,13 +39,19 @@
     <md-content class="msg-container">
         <md-list flex>
             <md-list-item class="md-2-line" ng-repeat="msg in messages">
-                <img ng-src="{{user.avatarUrl}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />
+                <div class="md-avatar">
+                    <img ng-src="{{getAvatarFromId(msg.from)}}?{{$index}}" ng-hide="msg.from===user._id" class="md-avatar" />
+                </div>
+                
                 <div class="md-list-item-text">
                     <h3>{{msg.messageText}}</h3>
                     <div class="msg-details">
                         <p class="msg-det from">{{msg.from}}</p>
                         <p class="msg-det time">{{msg.time}}</p>
                     </div>
+                </div>
+                <div class="md-avatar">
+                    <img ng-src="{{getAvatarFromId(msg.from)}}?{{$index}}" style="margin-right:0px; margin-left:16px" ng-show="msg.from===user._id" class="md-avatar" />
                 </div>
             </md-list-item>
         </md-list>
