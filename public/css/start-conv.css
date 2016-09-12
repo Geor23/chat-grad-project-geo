@@ -67,11 +67,29 @@
     font-size: 11px !important;
 }
 
-.from {
-    left: 0px;
+.msg-text {
+    padding: 5px !important;
+    border-radius: 3px;
 }
 
-.time {
+.msg-text.float-right {
+    border-bottom-right-radius: 0px;
+    background-color: green;
+}
+
+.msg-text.float-left {
+    border-bottom-left-radius: 0px;
+    background-color: grey;
+}
+
+.float-right {
     float: right;
-    right: 0px;
+    display: flex; 
+    flex-direction: row-reverse;
+}
+
+.float-left {
+    float: left;
+    display: flex; 
+    flex-direction: row;
 }
