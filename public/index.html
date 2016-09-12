@@ -50,17 +50,17 @@
                     <a ng-show="!loggedIn" href="{{loginUri}}" style="text-align: center; top: 50%; left:50%; position: absolute">Log in</a>
                     
                     <md-content class="non-bubble-container" ng-show="loggedIn">
-                        <md-tabs md-dynamic-height md-border-bottom>
+                        <md-tabs md-dynamic-height md-border-bottom md-selected="selectedIndex">
 
                             <md-tab label="New Conversation">
                                 <md-content class="md-padding flex-col">
 
                                     <md-content class="conv-users-container">
                                         <md-list flex>
-                                            <md-list-item class="md-1-line" ng-repeat="user in users" ng-click="addUserToConv(user)"  ng-class="isAlreadyInConv(user) ? 'disabled' : 'enabled'">
-                                                <img ng-src="{{user.avatarUrl}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />
+                                            <md-list-item class="md-1-line" ng-repeat="usr in users" ng-click="addUserToConv(usr)"  ng-class="isAlreadyInConv(usr) ? 'disabled' : 'enabled'" ng-if="user._id!==usr._id">
+                                                <img ng-src="{{usr.avatarUrl}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />
                                                 <div class="md-list-item-text" layout="column">
-                                                    <p>{{user.name}}</p>
+                                                    <p>{{usr.name}}</p>
                                                 </div>
                                             </md-list-item>
                                         </md-list>
@@ -74,7 +74,7 @@
                                         </div>
                                     </md-input-container>
 
-                                    <div class="chat-now-btn" ng-click="startConversation(inputConvName)">CHAT NOW</div>
+                                    <button class="chat-now-btn" ng-click="startConversation(inputConvName);" ng-disabled="inputConvName===''||inputno.length===0">CHAT NOW</button>
 
                                 </md-content>
                             </md-tab>
@@ -127,9 +127,9 @@
                                             <button type="button" ng-click="addUsersToConversation(); showUsers=false;">Add</button>
                                         </div>
 
-                                        <form class="send-msg" ng-submit="sendMessage(newMessage)">
-                                            <input style="width: 200px" type="text" ng-model="newMessage"></input>
-                                            <md-button type="submit">
+                                        <form class="send-msg" name="myForm" ng-submit="sendMessage(myForm.newMessage); myForm.newMessage='';">
+                                            <input style="width: 200px" type="text" ng-model="myForm.newMessage"></input>
+                                            <md-button type="submit" ng-disabled="myForm.newMessage===''">
                                                 <md-icon>send</md-icon>
                                             </md-button>
                                         </form>
@@ -150,7 +150,7 @@
 
                      <div ng-hide="!loggedIn" class="bubble-container">
                         <div ng-repeat="conv in conversations track by $index" ng-style="{'align-self': aligs[$index]}">
-                            <div class="bubble" ng-style="{'width': convSize[$index] + 'px', 'height': convSize[$index] + 'px', 'background-color': convCol[$index]}" ng-click="openConversation(conv)"><div ng-show="conv.unread!==undefined&&conv.unread!==0" style="text-align: center" ng-style="{margin: convSize[$index]/3 + 'px'}">{{conv.unread}}</div><div id="popup">{{conv.name}}</div></div>
+                            <div class="bubble" ng-style="{'width': convSize[$index] + 'px', 'height': convSize[$index] + 'px', 'background-color': convCol[$index]}" ng-click="openConversation(conv);"><div ng-show="conv.unread!==undefined&&conv.unread!==0" style="text-align: center" ng-style="{margin: convSize[$index]/3 + 'px'}">{{conv.unread}}</div><div id="popup">{{conv.name}}</div></div>
                         </div>
                     </div>
 

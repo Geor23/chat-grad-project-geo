@@ -72,6 +72,8 @@ ul {
 .chat-now-btn {
     text-shadow: 1px 1px grey;
     margin-top: 20px;
+    background-color: transparent;
+    border-width: 0px;
 }
 
 .chat-now-btn:hover {
@@ -189,7 +191,7 @@ ul {
     width: 35%;
     flex-wrap:  wrap-reverse;
     justify-content: space-around;
-    overflow-y: auto;
+    overflow: auto;
     border-bottom: 3px solid black;
     border-right: 3px solid black;
     border-left: 3px solid black;

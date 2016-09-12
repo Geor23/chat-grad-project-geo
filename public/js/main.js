@@ -71,6 +71,7 @@
         }
 
         $scope.openConversation = function(conversation) {
+            changeTab();
             $scope.conv = conversation;
             $scope.showConversation = true;
             int = $interval($scope.getMessages, 300);
@@ -94,10 +95,17 @@
             $http.post("/api/conv", data).then(function(response) {
                 $scope.conv = response.data;
                 $scope.getMessages();
+                $scope.showConversation = true;
+                changeTab();
             }, function(response) {
             });
-            $scope.showConversation = true;
         };
+
+        function changeTab() {
+            $scope.selectedIndex = 1;
+            $scope.inputConvName = "";
+            $scope.inputno = [];
+        }
 
         $scope.sendMessage = function(msg) {
             var d = new Date();
@@ -109,7 +117,6 @@
             };
             $http.post("/api/messages", data).then(function(response) {
                 $scope.getMessages();
-                $scope.newMessage = "";
             }, function(response) {
             });
         };
