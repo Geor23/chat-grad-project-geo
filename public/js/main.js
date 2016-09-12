@@ -142,6 +142,7 @@
         $scope.openConversation = function(conversation) {
             changeTab();
             $scope.conv = conversation;
+            $scope.messages = [];
             $scope.showConversation = true;
             int = $interval($scope.getMessages, 300);
         };
@@ -163,7 +164,7 @@
             };
             $http.post("/api/conv", data).then(function(response) {
                 $scope.conv = response.data;
-                $scope.getMessages();
+                $scope.messages = [];
                 $scope.showConversation = true;
                 changeTab();
             }, function(response) {
@@ -185,7 +186,6 @@
                 time: d
             };
             $http.post("/api/messages", data).then(function(response) {
-                $scope.getMessages();
             }, function(response) {
             });
         };
