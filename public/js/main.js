@@ -222,11 +222,11 @@
             );
         };
 
-        function updateMessages(server-messages) {
-            if (server-messages === []) {
-                $scope.messages = server-messages;
+        function updateMessages(serverMessages) {
+            if (serverMessages === []) {
+                $scope.messages = serverMessages;
             } else {
-                server-messages.forEach(function(msg) {
+                serverMessages.forEach(function(msg) {
                     if (!contains($scope.messages, msg._id)) {
                         $scope.messages.push(msg);
                     }
