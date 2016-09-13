@@ -1,5 +1,5 @@
 (function() {
-    var app = angular.module("ChatApp", ["ngMaterial", "luegg.directives"]);
+    var app = angular.module("ChatApp", ["ngMaterial"]);
 
     app.controller("ChatController", function($scope, $http, $interval, $mdDialog) {
 
@@ -142,6 +142,7 @@
         $scope.openConversation = function(conversation) {
             changeTab();
             $scope.conv = conversation;
+            $scope.messages = [];
             $scope.showConversation = true;
             int = $interval($scope.getMessages, 300);
         };
@@ -163,7 +164,7 @@
             };
             $http.post("/api/conv", data).then(function(response) {
                 $scope.conv = response.data;
-                $scope.getMessages();
+                $scope.messages = [];
                 $scope.showConversation = true;
                 changeTab();
             }, function(response) {
@@ -185,7 +186,6 @@
                 time: d
             };
             $http.post("/api/messages", data).then(function(response) {
-                $scope.getMessages();
             }, function(response) {
             });
         };
@@ -216,11 +216,33 @@
             })
                 .then(function(res) {
                     updateLastOpened();
-                    $scope.messages = res.data;
+                    updateMessages(res.data);
                 }, function(response) {
                 }
             );
         };
+
+        function updateMessages(serverMessages) {
+            if (serverMessages === []) {
+                $scope.messages = serverMessages;
+            } else {
+                serverMessages.forEach(function(msg) {
+                    if (!contains($scope.messages, msg._id)) {
+                        $scope.messages.push(msg);
+                    }
+                });
+            }
+        }
+
+        function contains(array, uId) {
+            var res = false;
+            array.forEach(function(item) {
+                if (item._id === uId) {
+                    res = true;
+                }
+            });
+            return res;
+        }
 
         function updateConvAndSetNotification() {
             $http.get("/api/conv", {

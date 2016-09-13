@@ -36,13 +36,22 @@
         </div>
     </div>
     
-    <md-content class="conv-users-container" style="background-color:white" scroll-glue>
+    <md-content class="msg-container" scroll-glue>
         <md-list flex>
             <md-list-item class="md-2-line" ng-repeat="msg in messages">
-                <img ng-src="{{user.avatarUrl}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />
-                <div class="md-list-item-text" layout="column">
-                    <p>{{msg.from}}: Time: {{msg.time}}</p>
-                    <h5>{{msg.messageText}}</h5>
+                <div class="md-avatar">
+                    <img ng-src="{{getAvatarFromId(msg.from)}}?{{$index}}" ng-hide="msg.from===user._id" class="md-avatar" />
+                </div>
+                
+                <div class="md-list-item-text" style="display: flex; flex-direction: column">
+                    <h3 ng-class="msg.from===user._id ? 'msg-text float-right' : 'msg-text float-left'">{{msg.messageText}}</h3>
+                    <div class="msg-details">
+                        <p ng-class="msg.from===user._id ? 'msg-det float-right' : 'msg-det float-left'">{{msg.from}}</p>
+                        <p ng-class="msg.from!==user._id ? 'msg-det float-right' : 'msg-det float-left'">{{msg.time}}</p>
+                    </div>
+                </div>
+                <div class="md-avatar">
+                    <img ng-src="{{getAvatarFromId(msg.from)}}?{{$index}}" style="margin-right:0px; margin-left:16px" ng-show="msg.from===user._id" class="md-avatar" />
                 </div>
             </md-list-item>
         </md-list>
